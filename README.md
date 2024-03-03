@@ -12,3 +12,6 @@ thêm truyện
     đăng nhập
     đăng ký
     thay đổi thông tin cá nhân
+
+    tìm kiếm truyện
+    
