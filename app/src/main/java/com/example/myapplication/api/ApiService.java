@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface ApiService {
@@ -23,9 +24,8 @@ public interface ApiService {
             @Field("password") String password,
             @Field("email") String email
     );
-
     @FormUrlEncoded
-    @POST("gettop5novel.php")
-    Call<ArrayList<Novel>> Getlist5();
+    @POST("gettopnovel.php")
+    Call<ArrayList<Novel>> Getlist5(@Field("") String dummy);
 
 }

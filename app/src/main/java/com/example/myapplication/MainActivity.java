@@ -41,8 +41,6 @@ public class MainActivity extends AppCompatActivity {
                 i.setClass(MainActivity.this,RegisterAct.class);
                 startActivity(i);
 
-
-
             }
         });
         log.setOnClickListener(new View.OnClickListener(){
@@ -63,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-
 
                 if (response.isSuccessful()) {
                     LoginResponse loginResponse = response.body();

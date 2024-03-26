@@ -5,7 +5,8 @@
     android:layout_marginEnd="10dp"
     android:id="@+id/novelcard"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginTop="10dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

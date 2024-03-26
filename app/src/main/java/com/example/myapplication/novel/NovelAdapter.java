@@ -44,6 +44,7 @@ public class NovelAdapter extends RecyclerView.Adapter<NovelAdapter.BooKViewHold
         }
         String url = nv.getImg();
         Glide.with(holder.itemView).load(url).into(holder.img);
+        holder.name.setText(nv.getName());
         holder.novelcard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,9 +69,10 @@ public class NovelAdapter extends RecyclerView.Adapter<NovelAdapter.BooKViewHold
 
         public BooKViewHolder(@NonNull View itemView) {
             super(itemView);
-            novelcard = itemView.findViewById(R.id.novelcard);
+
             img = itemView.findViewById(R.id.card_img);
             name = itemView.findViewById(R.id.card_name);
+            novelcard = itemView.findViewById(R.id.novelcard);
 
         }
     }
