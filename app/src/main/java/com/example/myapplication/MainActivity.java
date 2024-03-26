@@ -9,11 +9,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.myapplication.api.ApiService;
+import com.example.myapplication.api.LoginResponse;
+import com.example.myapplication.api.RetrofitClient;
+import com.example.myapplication.novel.Novel;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -92,4 +96,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();}
+
+
+
 }

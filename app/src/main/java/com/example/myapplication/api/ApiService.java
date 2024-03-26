@@ -1,5 +1,9 @@
-package com.example.myapplication;
-import java.util.List;
+package com.example.myapplication.api;
+
+import com.example.myapplication.novel.Novel;
+
+import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -19,5 +23,9 @@ public interface ApiService {
             @Field("password") String password,
             @Field("email") String email
     );
+
+    @FormUrlEncoded
+    @POST("gettop5novel.php")
+    Call<ArrayList<Novel>> Getlist5();
 
 }
