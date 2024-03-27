@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -69,7 +70,10 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
 
                         Intent i = new Intent();
-                        i .setClass(MainActivity.this, HomeAct.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("nameuser",username);
+                        i.putExtras(bundle);
+                        i.setClass(MainActivity.this, HomeAct.class);
                         startActivity(i);
                     } else {
                         // Đăng nhập không thành công, thông báo lỗi

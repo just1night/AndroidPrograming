@@ -69,7 +69,6 @@ public class NovelAdapter extends RecyclerView.Adapter<NovelAdapter.BooKViewHold
 
         public BooKViewHolder(@NonNull View itemView) {
             super(itemView);
-
             img = itemView.findViewById(R.id.card_img);
             name = itemView.findViewById(R.id.card_name);
             novelcard = itemView.findViewById(R.id.novelcard);

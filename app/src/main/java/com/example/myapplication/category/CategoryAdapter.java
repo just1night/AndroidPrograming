@@ -86,6 +86,9 @@ public class CategoryAdapter extends  RecyclerView.Adapter<CategoryAdapter.Categ
         Intent i = new Intent(context, NovelInfor.class);
         Bundle bundle = new Bundle();
         bundle.putString("name", novel.getName());
+        bundle.putString("img", novel.getImg());
+        bundle.putString("aut", novel.getAuthor());
+        bundle.putString("discrip", novel.getDiscription());
         i.putExtras(bundle);
         context.startActivity(i);
     }

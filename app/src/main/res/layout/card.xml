@@ -19,6 +19,7 @@
             android:layout_height="600px"
             android:src="@drawable/ic_launcher_background"
             android:scaleType="centerCrop"
+
             >
         </ImageView>
     </androidx.cardview.widget.CardView>

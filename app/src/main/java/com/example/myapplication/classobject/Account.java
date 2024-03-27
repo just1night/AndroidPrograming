@@ -1,11 +1,17 @@
 package com.example.myapplication.classobject;
 
-public class Account {
-    private int id;
-    private String username;
+import com.google.gson.annotations.SerializedName;
 
-    private String passwood;
+public class Account {
+    @SerializedName("ID")
+    private int id;
+    @SerializedName("Useracc")
+    private String username;
+    @SerializedName("Email")
     private String email;
+    @SerializedName("pass")
+    private String passwood;
+
 
     public int getId() {
         return id;
