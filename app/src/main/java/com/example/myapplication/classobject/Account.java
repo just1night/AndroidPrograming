@@ -12,6 +12,32 @@ public class Account {
     @SerializedName("pass")
     private String passwood;
 
+//    Singleton Support
+
+    private static  Account instance;
+    private Account() {
+    }
+
+    public static Account getInstance(){
+        if (instance == null){
+            instance = new Account();
+        }
+        return  instance;
+    }
+
+
+
+
+
+
+// Normal Object code
+
+
+
+    public Account(String username, String passwood) {
+        this.username = username;
+        this.passwood = passwood;
+    }
 
     public int getId() {
         return id;

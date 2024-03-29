@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.NovelInfor;
 import com.example.myapplication.R;
+import com.example.myapplication.classobject.Account;
 import com.example.myapplication.novel.IClickcard;
 import com.example.myapplication.novel.Novel;
 import com.example.myapplication.novel.NovelAdapter;
@@ -60,6 +61,7 @@ public class CategoryAdapter extends  RecyclerView.Adapter<CategoryAdapter.Categ
         });
         holder.rcNovel.setAdapter(noveladapter);
 
+
     }
 
     @Override
@@ -77,7 +79,6 @@ public class CategoryAdapter extends  RecyclerView.Adapter<CategoryAdapter.Categ
 
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
-
             tvname = itemView.findViewById(R.id.category);
             rcNovel = itemView.findViewById(R.id.recycle_view_novel);
         }
@@ -85,6 +86,7 @@ public class CategoryAdapter extends  RecyclerView.Adapter<CategoryAdapter.Categ
     private void OnclickGotoDetail(Novel novel){
         Intent i = new Intent(context, NovelInfor.class);
         Bundle bundle = new Bundle();
+        bundle.putInt("idnovel",novel.getId());
         bundle.putString("name", novel.getName());
         bundle.putString("img", novel.getImg());
         bundle.putString("aut", novel.getAuthor());

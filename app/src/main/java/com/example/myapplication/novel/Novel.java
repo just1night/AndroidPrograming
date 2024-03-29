@@ -1,8 +1,11 @@
 package com.example.myapplication.novel;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Novel {
+    @SerializedName("ID")
     int id;
     String name,img,author,discription;
     int chapters;

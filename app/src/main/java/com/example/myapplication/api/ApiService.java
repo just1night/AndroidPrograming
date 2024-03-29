@@ -34,6 +34,10 @@ public interface ApiService {
     @POST("gettopnovel.php")
     Call<ArrayList<Novel>> Getlist5(@Field("") String dummy);
 
+    @FormUrlEncoded
+    @POST("loaduser.php")
+    Call<Account> Getuser(@Field("username") String username);
+
     //đánh giá truyện
     @FormUrlEncoded
     @POST("Voting.php")

@@ -21,6 +21,8 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent i = new Intent();
                         Bundle bundle = new Bundle();
                         bundle.putString("nameuser",username);
+                        bundle.putString("pass",password);
                         i.putExtras(bundle);
                         i.setClass(MainActivity.this, HomeAct.class);
                         startActivity(i);

@@ -13,6 +13,7 @@ import com.example.myapplication.api.ApiService;
 import com.example.myapplication.api.RetrofitClient;
 import com.example.myapplication.category.Category;
 import com.example.myapplication.category.CategoryAdapter;
+import com.example.myapplication.classobject.Account;
 import com.example.myapplication.novel.Novel;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class HomeAct extends AppCompatActivity {
 
     private ArrayList<Novel> lstnv;
 
-    private TextView useracc ;
+    private TextView useracc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +39,7 @@ public class HomeAct extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         String valueShowname = bundle.getString("nameuser");
-        useracc.setText(valueShowname);
+        String valueShowpass = bundle.getString("pass");
 
 
 
@@ -52,8 +53,7 @@ public class HomeAct extends AppCompatActivity {
 
         lstnv = new ArrayList<>();
         Callgettop5();
-
-
+        getUser(valueShowname);
 
 
 
@@ -96,10 +96,37 @@ public class HomeAct extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ArrayList<Novel>> call, Throwable t) {
-// Xử lý khi có lỗi kết nối
+            // Xử lý khi có lỗi kết nối
                 Toast.makeText(HomeAct.this,  t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+    private void getUser(String username){
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        Call<Account> call = apiService.Getuser(username);
+        call.enqueue(new Callback<Account>() {
+            @Override
+            public void onResponse(Call<Account> call, Response<Account> response) {
+                if(response.isSuccessful()){
+                    Account a = response.body();
+                    //Tạo biến toàn cục
+                    Account account = Account.getInstance();
+                    //gán dữ liệu
+                    account.setId(a.getId());
+                    account.setUsername(a.getUsername());
+                    //Cập nhập tên
+                    useracc.setText(a.getUsername());
+                }else{
+                    // Ví dụ: Hiển thị thông báo lỗi
+                    Toast.makeText(HomeAct.this, "Không thể nhận dữ liệu từ máy chủ", Toast.LENGTH_SHORT).show();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<Account> call, Throwable t) {
+                // Xử lý khi có lỗi kết nối
+                Toast.makeText(HomeAct.this,  t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }
