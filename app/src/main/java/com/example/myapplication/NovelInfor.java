@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.myapplication.api.ApiService;
 import com.example.myapplication.api.LoginResponse;
+import com.example.myapplication.api.RatingResponse;
 import com.example.myapplication.api.RetrofitClient;
 import com.example.myapplication.api.VoteResponse;
 import com.example.myapplication.classobject.Account;
@@ -49,6 +50,7 @@ public class NovelInfor extends AppCompatActivity {
         discrp.setText(valueShowdiscrip);
 
         TextView goback = findViewById(R.id.go_back);
+
         goback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,6 +60,8 @@ public class NovelInfor extends AppCompatActivity {
                 finish();
             }
         });
+        //lấy đánh giá
+        getVoteofNovel(valueShowidnovel);
 
 //       đánh giá truyện
         Account account = Account.getInstance();
@@ -75,6 +79,7 @@ public class NovelInfor extends AppCompatActivity {
                 takeVote(idacc,valueShowidnovel,result);
             }
         });
+
 //       comment
         EditText comment = findViewById(R.id.editTextComment);
         Button submit = findViewById(R.id.btnsubmitmess);
@@ -97,10 +102,8 @@ public class NovelInfor extends AppCompatActivity {
                 VoteResponse voteResponse = response.body();
                 if (response.isSuccessful()) {
                     if (voteResponse.isSuccess()) {
-                        // Đăng nhập thành công, chuyển đến màn hình chính hoặc thực hiện các hành động khác
                         Toast.makeText(NovelInfor.this, voteResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
-                        // Đăng nhập không thành công, thông báo lỗi
                         Toast.makeText(NovelInfor.this, voteResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 } else {
@@ -112,6 +115,29 @@ public class NovelInfor extends AppCompatActivity {
             public void onFailure(Call<VoteResponse> call, Throwable t) {
                 Toast.makeText(NovelInfor.this,  t.getMessage(), Toast.LENGTH_SHORT).show();
 
+            }
+        });
+    }
+    private void getVoteofNovel(int idnovel){
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        Call<RatingResponse> call = apiService.RateofNovel(idnovel);
+        call.enqueue(new Callback<RatingResponse>() {
+            @Override
+            public void onResponse(Call<RatingResponse> call, Response<RatingResponse> response) {
+                if(response.isSuccessful()){
+                    RatingResponse ratingResponse = response.body();
+                    String x = String.valueOf(ratingResponse.getAVG());
+                    TextView vote = findViewById(R.id.ratingtxt);
+                    vote.setText(x+"/5");
+                }else {
+                    Toast.makeText(NovelInfor.this, "không lấy được dữ liệu", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RatingResponse> call, Throwable t) {
+                Toast.makeText(NovelInfor.this,  t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

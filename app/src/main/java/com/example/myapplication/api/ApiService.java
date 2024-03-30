@@ -47,5 +47,12 @@ public interface ApiService {
             @Field("rating")  float rating
     );
 
+    //Truyện được đánh giá
+    @FormUrlEncoded
+    @POST("takeAVGrate.php")
+    Call<RatingResponse> RateofNovel(
+        @Field("idnovel") int idnovel
+    );
+
 
 }
