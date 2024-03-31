@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient{
 
-    private static final String BASE_URL = "http://192.168.77.219/flatform/";
+    private static final String BASE_URL = "http://172.26.144.1/flatform/";
 
     private static Retrofit retrofit;
 

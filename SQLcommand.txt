@@ -24,7 +24,7 @@ CREATE TABLE `chapter` (
   `IDnovel` int(11) NOT NULL,
   `Name` text NOT NULL,
   PRIMARY KEY (`ID`),
-  FOREIGN KEY (`IDnovel`) REFERENCES `apptruyendb_novel`(`ID`)
+  FOREIGN KEY (`IDnovel`) REFERENCES `novel`(`ID`)
 );
 
 -- Tạo bảng bình luận
@@ -64,11 +64,11 @@ CREATE TABLE `history` (
 );
 
 -- Tạo bảng trang
-CREATE TABLE `page` (
+CREATE TABLE `content` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idchapter` int(11) NOT NULL,
-  `img` text NOT NULL,
-  `content` text NOT NULL,
+  `img` text ,
+  `textcontent` text ,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`idchapter`) REFERENCES `chapter`(`ID`)
+  FOREIGN KEY (`idchapter`) REFERENCES `apptruyendb_chapter`(`ID`));
 );

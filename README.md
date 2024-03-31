@@ -1,7 +1,7 @@
 # AndroidPrograming
 
 BTL App doc truyen:
-thêm truyện
+    thêm truyện
 
     List truyện với hình minh họa
     truyện gồm phần chữ và ảnh minh họa
