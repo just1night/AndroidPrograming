@@ -1,0 +1,75 @@
+--DB: apptruyendb
+-- Tạo bảng truyện
+CREATE TABLE `apptruyendb_novel` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text NOT NULL,
+  `img` text NOT NULL,
+  `author` text NOT NULL,
+  `description` text NOT NULL,
+  PRIMARY KEY (`ID`)
+);
+-- Tạo bảng tài khoản
+CREATE TABLE `account` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Useracc` varchar(225) NOT NULL,
+  `Email` varchar(225) NOT NULL,
+  `pass` varchar(225) NOT NULL,
+  PRIMARY KEY (`ID`)
+);
+
+-- Tạo bảng chương
+CREATE TABLE `apptruyendb_chapter` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `IDnovel` int(11) NOT NULL,
+  `chapters` int(11) NOT NULL,
+  `content` text NOT NULL,
+  PRIMARY KEY (`ID`),
+  FOREIGN KEY (`IDnovel`) REFERENCES `apptruyendb_novel`(`ID`)
+);
+
+-- Tạo bảng bình luận
+CREATE TABLE `comment` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `IDnovel` int(11) NOT NULL,
+  `IDacc` int(11) NOT NULL,
+  `content` text NOT NULL,
+  `time` date NOT NULL,
+  PRIMARY KEY (`ID`),
+  FOREIGN KEY (`IDnovel`) REFERENCES `apptruyendb_novel`(`ID`),
+  FOREIGN KEY (`IDacc`) REFERENCES `apptruyendb_account`(`ID`)
+);
+
+
+
+-- Tạo bảng đánh giá
+CREATE TABLE `rate` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `IDnovel` int(11) NOT NULL,
+  `IDacc` int(11) NOT NULL,
+  `rating` float NOT NULL,
+  `check` tinyint(1) NOT NULL,
+  PRIMARY KEY (`ID`),
+  FOREIGN KEY (`IDnovel`) REFERENCES `apptruyendb_novel`(`ID`),
+  FOREIGN KEY (`IDacc`) REFERENCES `apptruyendb_account`(`ID`)
+);
+
+-- Tạo bảng lịch sử
+CREATE TABLE `history` (
+  `IDacc` int(11) NOT NULL,
+  `IDnovel` int(11) NOT NULL,
+  `IDchapter` int(11) NOT NULL,
+  PRIMARY KEY (`IDacc`, `IDnovel`, `IDchapter`),
+  FOREIGN KEY (`IDacc`) REFERENCES `apptruyendb_account`(`ID`),
+  FOREIGN KEY (`IDnovel`) REFERENCES `apptruyendb_novel`(`ID`),
+  FOREIGN KEY (`IDchapter`) REFERENCES `apptruyendb_chapter`(`ID`)
+);
+
+-- Tạo bảng trang
+CREATE TABLE `page` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idchapter` int(11) NOT NULL,
+  `img` text NOT NULL,
+  `content` text NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idchapter`) REFERENCES `apptruyendb_chapter`(`ID`)
+);
