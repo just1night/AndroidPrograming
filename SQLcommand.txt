@@ -1,11 +1,11 @@
 --DB: apptruyendb
 -- Tạo bảng truyện
-CREATE TABLE `apptruyendb_novel` (
+CREATE TABLE `novel` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `name` text NOT NULL,
   `img` text NOT NULL,
   `author` text NOT NULL,
-  `description` text NOT NULL,
+  `discription` text NOT NULL,
   PRIMARY KEY (`ID`)
 );
 -- Tạo bảng tài khoản
@@ -14,15 +14,15 @@ CREATE TABLE `account` (
   `Useracc` varchar(225) NOT NULL,
   `Email` varchar(225) NOT NULL,
   `pass` varchar(225) NOT NULL,
+ `otpreset` int(11),
   PRIMARY KEY (`ID`)
 );
 
 -- Tạo bảng chương
-CREATE TABLE `apptruyendb_chapter` (
+CREATE TABLE `chapter` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `IDnovel` int(11) NOT NULL,
-  `chapters` int(11) NOT NULL,
-  `content` text NOT NULL,
+  `Name` text NOT NULL,
   PRIMARY KEY (`ID`),
   FOREIGN KEY (`IDnovel`) REFERENCES `apptruyendb_novel`(`ID`)
 );
@@ -33,10 +33,9 @@ CREATE TABLE `comment` (
   `IDnovel` int(11) NOT NULL,
   `IDacc` int(11) NOT NULL,
   `content` text NOT NULL,
-  `time` date NOT NULL,
   PRIMARY KEY (`ID`),
-  FOREIGN KEY (`IDnovel`) REFERENCES `apptruyendb_novel`(`ID`),
-  FOREIGN KEY (`IDacc`) REFERENCES `apptruyendb_account`(`ID`)
+  FOREIGN KEY (`IDnovel`) REFERENCES `novel`(`ID`),
+  FOREIGN KEY (`IDacc`) REFERENCES `account`(`ID`)
 );
 
 
@@ -47,10 +46,9 @@ CREATE TABLE `rate` (
   `IDnovel` int(11) NOT NULL,
   `IDacc` int(11) NOT NULL,
   `rating` float NOT NULL,
-  `check` tinyint(1) NOT NULL,
   PRIMARY KEY (`ID`),
-  FOREIGN KEY (`IDnovel`) REFERENCES `apptruyendb_novel`(`ID`),
-  FOREIGN KEY (`IDacc`) REFERENCES `apptruyendb_account`(`ID`)
+  FOREIGN KEY (`IDnovel`) REFERENCES `novel`(`ID`),
+  FOREIGN KEY (`IDacc`) REFERENCES `account`(`ID`)
 );
 
 -- Tạo bảng lịch sử
@@ -58,10 +56,11 @@ CREATE TABLE `history` (
   `IDacc` int(11) NOT NULL,
   `IDnovel` int(11) NOT NULL,
   `IDchapter` int(11) NOT NULL,
+  `bookmark` tinyint(1) NOT NULL,
   PRIMARY KEY (`IDacc`, `IDnovel`, `IDchapter`),
-  FOREIGN KEY (`IDacc`) REFERENCES `apptruyendb_account`(`ID`),
-  FOREIGN KEY (`IDnovel`) REFERENCES `apptruyendb_novel`(`ID`),
-  FOREIGN KEY (`IDchapter`) REFERENCES `apptruyendb_chapter`(`ID`)
+  FOREIGN KEY (`IDacc`) REFERENCES `account`(`ID`),
+  FOREIGN KEY (`IDnovel`) REFERENCES `novel`(`ID`),
+  FOREIGN KEY (`IDchapter`) REFERENCES `chapter`(`ID`)
 );
 
 -- Tạo bảng trang
@@ -71,5 +70,5 @@ CREATE TABLE `page` (
   `img` text NOT NULL,
   `content` text NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`idchapter`) REFERENCES `apptruyendb_chapter`(`ID`)
+  FOREIGN KEY (`idchapter`) REFERENCES `chapter`(`ID`)
 );

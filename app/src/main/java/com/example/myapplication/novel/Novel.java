@@ -8,7 +8,7 @@ public class Novel {
     @SerializedName("ID")
     int id;
     String name,img,author,discription;
-    int chapters;
+
 
 
     public Novel() {
@@ -30,7 +30,6 @@ public class Novel {
         this.img = img;
         this.author = author;
         this.discription = discription;
-        this.chapters = chapters;
     }
 
     public int getId() {
@@ -73,11 +72,5 @@ public class Novel {
         this.discription = discription;
     }
 
-    public int getChapters() {
-        return chapters;
-    }
 
-    public void setChapters(int chapters) {
-        this.chapters = chapters;
-    }
 }
