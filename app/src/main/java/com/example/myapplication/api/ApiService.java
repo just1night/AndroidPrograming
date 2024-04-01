@@ -53,6 +53,12 @@ public interface ApiService {
     Call<RatingResponse> RateofNovel(
         @Field("idnovel") int idnovel
     );
-
-
+    //gửi đánh giá
+    @FormUrlEncoded
+    @POST("sendmessage.php")
+    Call<CommentResponse> CommentRes(
+            @Field("idnovel") int idnovel,
+            @Field("idacc") int idacc,
+            @Field("Content") String Content
+    );
 }

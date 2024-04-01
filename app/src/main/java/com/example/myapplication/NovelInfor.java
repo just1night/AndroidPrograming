@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.api.ApiService;
+import com.example.myapplication.api.CommentResponse;
 import com.example.myapplication.api.LoginResponse;
 import com.example.myapplication.api.RatingResponse;
 import com.example.myapplication.api.RetrofitClient;
@@ -54,9 +55,6 @@ public class NovelInfor extends AppCompatActivity {
         goback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent();
-//                intent.setClass(NovelInfor.this, HomeAct.class);
-//                startActivity(intent);
                 finish();
             }
         });
@@ -82,11 +80,12 @@ public class NovelInfor extends AppCompatActivity {
 
 //       comment
         EditText comment = findViewById(R.id.editTextComment);
+        String content = comment.getText().toString();
         Button submit = findViewById(R.id.btnsubmitmess);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                    sendComment(valueShowidnovel,idacc,content);
             }
         });
     }
@@ -141,7 +140,30 @@ public class NovelInfor extends AppCompatActivity {
             }
         });
     }
+    private void sendComment(int idnovel,int idacc,String content){
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        Call<CommentResponse> call = apiService.CommentRes(idnovel,idacc,content);
+        call.enqueue(new Callback<CommentResponse>() {
+            @Override
+            public void onResponse(Call<CommentResponse> call, Response<CommentResponse> response) {
+                if(response.isSuccessful()){
+                    CommentResponse commentResponse = response.body();
+                    if(commentResponse.isSuccess()) {
+                        Toast.makeText(NovelInfor.this,commentResponse.getMessage(),Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(NovelInfor.this, commentResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(NovelInfor.this,"Can not connect  to server",Toast.LENGTH_SHORT).show();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<CommentResponse> call, Throwable t) {
+                Toast.makeText(NovelInfor.this,  t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 
 }

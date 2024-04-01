@@ -258,16 +258,18 @@
             <EditText
                 android:id="@+id/editTextComment"
                 android:layout_width="172dp"
-                android:layout_height="56dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="Write sth..."
-                android:inputType="textMultiLine" />
+                android:hint="Write sth..." />
+
             <Button
                 android:id="@+id/btnsubmitmess"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Xác nhận"/>
+
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
