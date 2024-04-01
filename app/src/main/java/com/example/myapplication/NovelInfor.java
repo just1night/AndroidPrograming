@@ -140,9 +140,9 @@ public class NovelInfor extends AppCompatActivity {
             }
         });
     }
-    private void sendComment(int idnovel,int idacc,String content){
+    private void sendComment(int idnovel,int idacc,String Content){
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-        Call<CommentResponse> call = apiService.CommentRes(idnovel,idacc,content);
+        Call<CommentResponse> call = apiService.CommentRes(idnovel,idacc,Content);
         call.enqueue(new Callback<CommentResponse>() {
             @Override
             public void onResponse(Call<CommentResponse> call, Response<CommentResponse> response) {
@@ -154,7 +154,7 @@ public class NovelInfor extends AppCompatActivity {
                         Toast.makeText(NovelInfor.this, commentResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }else{
-                    Toast.makeText(NovelInfor.this,"Can not connect  to server",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NovelInfor.this,"Can not connect to server",Toast.LENGTH_SHORT).show();
                 }
             }
 

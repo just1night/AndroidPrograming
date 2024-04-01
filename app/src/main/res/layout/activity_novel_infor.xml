@@ -261,15 +261,13 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="Write sth..." />
-
+                android:hint="Write sth..."
+                android:inputType="textMultiLine" />
             <Button
                 android:id="@+id/btnsubmitmess"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Xác nhận"/>
-
-
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
