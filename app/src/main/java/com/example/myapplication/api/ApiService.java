@@ -59,6 +59,6 @@ public interface ApiService {
     Call<CommentResponse> CommentRes(
             @Field("idnovel") int idnovel,
             @Field("idacc") int idacc,
-            @Field("Content") String Content
+            @Field("content") String content
     );
 }

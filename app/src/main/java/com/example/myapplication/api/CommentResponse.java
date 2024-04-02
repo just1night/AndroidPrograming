@@ -7,8 +7,8 @@ public class CommentResponse {
     public boolean isSuccess() {
         return success;
     }
-
     public String getMessage() {
         return message;
     }
+
 }

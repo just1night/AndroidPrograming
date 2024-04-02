@@ -79,13 +79,13 @@ public class NovelInfor extends AppCompatActivity {
         });
 
 //       comment
-        EditText comment = findViewById(R.id.editTextComment);
-        String content = comment.getText().toString();
         Button submit = findViewById(R.id.btnsubmitmess);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    sendComment(valueShowidnovel,idacc,content);
+                EditText comment = findViewById(R.id.editTextComment);
+                String content = comment.getText().toString();
+                sendComment(valueShowidnovel,idacc,content);
             }
         });
     }
@@ -140,9 +140,9 @@ public class NovelInfor extends AppCompatActivity {
             }
         });
     }
-    private void sendComment(int idnovel,int idacc,String Content){
+    private void sendComment(int idnovel,int idacc,String content){
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-        Call<CommentResponse> call = apiService.CommentRes(idnovel,idacc,Content);
+        Call<CommentResponse> call = apiService.CommentRes(idnovel,idacc,content);
         call.enqueue(new Callback<CommentResponse>() {
             @Override
             public void onResponse(Call<CommentResponse> call, Response<CommentResponse> response) {
