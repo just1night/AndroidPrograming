@@ -5,15 +5,15 @@ import com.google.gson.annotations.SerializedName;
 public class Chapter {
     int ID;
     @SerializedName("IDnovel")
-    int idNovel;
+    int IDnovel;
     @SerializedName("Name")
-    private String chapterName;
+    private String Name;
 
 
-    public Chapter(int ID, int idNovel, String chapterName) {
+    public Chapter(int ID, int IDnovel, String Name) {
         this.ID = ID;
-        this.idNovel = idNovel;
-        this.chapterName = chapterName;
+        this.IDnovel = IDnovel;
+        this.Name = Name;
     }
 
     public int getID() {
@@ -24,19 +24,19 @@ public class Chapter {
         this.ID = ID;
     }
 
-    public String getChapterName() {
-        return chapterName;
+    public String getName() {
+        return Name;
     }
 
-    public void setChapterName(String chapterName) {
-        this.chapterName = chapterName;
+    public void setName(String Name) {
+        this.Name = Name;
     }
 
-    public int getIdNovel() {
-        return idNovel;
+    public int getIDnovel() {
+        return IDnovel;
     }
 
-    public void setIdNovel(int idNovel) {
-        this.idNovel = idNovel;
+    public void setIDnovel(int IDnovel) {
+        this.IDnovel = IDnovel;
     }
 }

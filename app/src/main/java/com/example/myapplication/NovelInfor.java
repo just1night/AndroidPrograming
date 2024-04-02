@@ -34,6 +34,7 @@ import retrofit2.Response;
 public class NovelInfor extends AppCompatActivity {
     private RecyclerView rcvChapter;
     private ChapterAdapter chapterAdapter;
+    private ArrayList<Chapter> lstChapter;
 
 
     @Override
@@ -106,7 +107,7 @@ public class NovelInfor extends AppCompatActivity {
         rcvChapter.setLayoutManager(linearLayoutManager);
         getListChapter(valueShowidnovel);
         //chapterAdapter.setChapters(getListChapter(valueShowidnovel));
-        rcvChapter.setAdapter(chapterAdapter);
+
     }
 
     private void getListChapter(int idNovel) {
@@ -116,8 +117,9 @@ public class NovelInfor extends AppCompatActivity {
             @Override
             public void onResponse(Call<ArrayList<Chapter>> call, Response<ArrayList<Chapter>> response) {
                 if(response.isSuccessful()){
-                    ArrayList chapters = response.body();
-                    chapterAdapter.setChapters(chapters);
+                    lstChapter = response.body();
+                    chapterAdapter.setChapters(lstChapter);
+                    rcvChapter.setAdapter(chapterAdapter);
                 }else {
                     Toast.makeText(NovelInfor.this, "không lấy được dữ liệu", Toast.LENGTH_SHORT).show();
                 }
