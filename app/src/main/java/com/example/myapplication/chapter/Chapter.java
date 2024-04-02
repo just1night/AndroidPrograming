@@ -6,6 +6,7 @@ public class Chapter {
     int ID;
     @SerializedName("IDnovel")
     int idNovel;
+    @SerializedName("Name")
     private String chapterName;
 
 
