@@ -1,5 +1,6 @@
 package com.example.myapplication.api;
 
+import com.example.myapplication.chapter.Chapter;
 import com.example.myapplication.classobject.Account;
 import com.example.myapplication.novel.Novel;
 
@@ -60,5 +61,10 @@ public interface ApiService {
             @Field("idnovel") int idnovel,
             @Field("idacc") int idacc,
             @Field("content") String content
+    );
+    @FormUrlEncoded
+    @POST("getchapter.php")
+    Call<ArrayList<Chapter>> getChapter(
+            @Field("idnovel") int idnovel
     );
 }
