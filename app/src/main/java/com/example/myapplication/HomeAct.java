@@ -58,7 +58,6 @@ public class HomeAct extends AppCompatActivity {
 
 
     }
-
 //    private ArrayList<Category> getListCatagory(){
 //        ArrayList<Category> lst = new ArrayList<>();
 //
@@ -82,9 +81,12 @@ public class HomeAct extends AppCompatActivity {
                     // Phản hồi từ máy chủ thành công
                     lstnv = response.body();
                     ArrayList<Category> lst = new ArrayList<>();
+
                     // Sử dụng dữ liệu ở đây
                     // Ví dụ: categoryadapter.setData(lstnv);
                     lst.add(new Category("Truyện đang nổi",lstnv));
+                    lst.add(new Category("Truyện hay",lstnv));
+                    lst.add(new Category("Truyện tình cảm",lstnv));
                     categoryadapter.setData(lst);
                     rv.setAdapter(categoryadapter);
                 } else {
