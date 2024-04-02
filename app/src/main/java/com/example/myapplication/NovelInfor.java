@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,13 +21,20 @@ import com.example.myapplication.api.LoginResponse;
 import com.example.myapplication.api.RatingResponse;
 import com.example.myapplication.api.RetrofitClient;
 import com.example.myapplication.api.VoteResponse;
+import com.example.myapplication.chapter.Chapter;
+import com.example.myapplication.chapter.ChapterAdapter;
 import com.example.myapplication.classobject.Account;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class NovelInfor extends AppCompatActivity {
+    private RecyclerView rcvChapter;
+    private ChapterAdapter chapterAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +95,37 @@ public class NovelInfor extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                     sendComment(valueShowidnovel,idacc,content);
+            }
+        });
+
+    //Recycle view chapter
+        rcvChapter = findViewById(R.id.rcvChapter);
+        chapterAdapter = new ChapterAdapter(this);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        rcvChapter.setLayoutManager(linearLayoutManager);
+        getListChapter(valueShowidnovel);
+        //chapterAdapter.setChapters(getListChapter(valueShowidnovel));
+        rcvChapter.setAdapter(chapterAdapter);
+    }
+
+    private void getListChapter(int idNovel) {
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        Call<ArrayList<Chapter>> call = apiService.getChapter(idNovel);
+        call.enqueue(new Callback<ArrayList<Chapter>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Chapter>> call, Response<ArrayList<Chapter>> response) {
+                if(response.isSuccessful()){
+                    ArrayList chapters = response.body();
+                    chapterAdapter.setChapters(chapters);
+                }else {
+                    Toast.makeText(NovelInfor.this, "không lấy được dữ liệu", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Chapter>> call, Throwable t) {
+                Toast.makeText(NovelInfor.this,  t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
