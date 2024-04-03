@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.bumptech.glide.Glide;
 import com.example.myapplication.api.ApiService;
 import com.example.myapplication.api.RetrofitClient;
@@ -23,6 +24,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
+
 public class ReadingPage extends AppCompatActivity {
     private ReadingAdapter readingAdapter;
     private RecyclerView rcvReading;
@@ -34,8 +37,10 @@ public class ReadingPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reading_page);
 
+
         Intent intent1 = getIntent();
         Bundle bundle = intent1.getExtras();
+
 
         int id = bundle.getInt("key_id");
 
@@ -72,6 +77,7 @@ public class ReadingPage extends AppCompatActivity {
                     Toast.makeText(ReadingPage.this, "không lấy được dữ liệu", Toast.LENGTH_SHORT).show();
                 }
             }
+
 
             @Override
             public void onFailure(Call<ArrayList<Reading>> call, Throwable t) {
