@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.telecom.Call;
 
 import com.example.myapplication.api.ApiService;
 import com.example.myapplication.api.RetrofitClient;
@@ -16,6 +15,8 @@ import com.example.myapplication.reading.ReadingAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
 
 public class ReadingPage extends AppCompatActivity {
 
@@ -30,7 +31,7 @@ public class ReadingPage extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
-        String id = bundle.getString("idchaper");
+        int id = bundle.getInt("idchaper");
 
 
 
@@ -45,9 +46,9 @@ public class ReadingPage extends AppCompatActivity {
 
     }
 
-    private void getReadingPagelist(String id) {
+    private void getReadingPagelist(int id) {
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-        Call<ArrayList<Reading>> call = apiService.GetReadingPage(id);
+        Call<ArrayList<Reading>> call = apiService.getReadingPage(id);
 
     }
 
