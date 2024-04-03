@@ -6,48 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".ReadingPage">
 
-    <RelativeLayout
+    <!--   Add a TextView to display the title of the chapter-->
+    <TextView
+        android:id="@+id/tvtitle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/reading_page">
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:padding="20dp"
+        android:text="Chapter x"
+        android:textAlignment="center"
+        android:paddingLeft="20dp"/>
+<!--   Add RecyclerView to display the content of the chapter-->
 
-<!--        // A reading page is a page that displays the content of a chapter contain images and text-->
-<!--        // The content of the chapter is displayed in a scroll view and a recycleview-->
-        <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/reading_page_content">
-        <!--                title of the chapter is displayed in a textview and stiched to the top of the page-->
-                        <TextView
-                            android:id="@+id/chapter_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="20dp"
-                            android:padding="20dp"
-                            android:text="Chapter 1"
-                            android:paddingLeft="20dp"/>
-                        <ImageView
-                            android:id="@+id/chapter_image"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="20dp"
-                            android:layout_below="@id/chapter_title"/>
-                        <TextView
-                            android:id="@+id/chapter_content"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="16dp"
-                            android:padding="20dp"
-                            android:text="Chapter content"
-                            android:layout_below="@id/chapter_image"/>
-                    </RelativeLayout>
-        </ScrollView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvreading"
+        android:paddingTop="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    </androidx.recyclerview.widget.RecyclerView>
+
 </RelativeLayout>

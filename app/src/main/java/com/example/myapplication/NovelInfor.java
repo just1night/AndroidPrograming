@@ -18,7 +18,6 @@ import com.bumptech.glide.Glide;
 import com.example.myapplication.api.ApiService;
 import com.example.myapplication.api.BookmarkResponse;
 import com.example.myapplication.api.CommentResponse;
-import com.example.myapplication.api.LoginResponse;
 import com.example.myapplication.api.RatingResponse;
 import com.example.myapplication.api.RetrofitClient;
 import com.example.myapplication.api.VoteResponse;
@@ -155,7 +154,7 @@ public class NovelInfor extends AppCompatActivity {
                         Bundle bundle = new Bundle();
                         bundle.putInt("idchapter",idchapter);
                         i.putExtras(bundle);
-                        i.setClass(NovelInfor.this,ReadingPage.class);
+                        i.setClass(NovelInfor.this, ReadingPage.class);
                         startActivity(i);
 
                     }else{

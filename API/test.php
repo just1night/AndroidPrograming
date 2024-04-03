@@ -18,15 +18,15 @@ require_once 'user.php';
 // $idnovel = 1;
 
 // $rateing = 3;
-$username = "";
-if (isset($_POST['username'])) {
+// $username = "";
+// if (isset($_POST['username'])) {
 
-    $username = $_POST['username'];
-}
+//     $username = $_POST['username'];
+// }
 
-$user = new User();
-$user->__construct();
-$response = array();
-$response = json_encode($user->getuserinfor("huy"));
-echo $response;
+// $user = new User();
+// $user->__construct();
+// $response = array();
+// $response = json_encode($user->getuserinfor("huy"));
+// echo $response;
 

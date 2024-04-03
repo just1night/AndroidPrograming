@@ -26,6 +26,7 @@ if (isset($_POST['email'])) {
 
 $userObject = new User();
 
+
 // Registration
 $json_registration = array();
 
@@ -37,3 +38,6 @@ if (!empty($username) && !empty($password) && !empty($email)) {
 
     echo json_encode($json_registration);
 }
+
+
+?>

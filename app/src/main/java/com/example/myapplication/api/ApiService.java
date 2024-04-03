@@ -3,6 +3,7 @@ package com.example.myapplication.api;
 import com.example.myapplication.chapter.Chapter;
 import com.example.myapplication.classobject.Account;
 import com.example.myapplication.novel.Novel;
+import com.example.myapplication.reading.Reading;
 
 import java.util.ArrayList;
 
@@ -75,6 +76,12 @@ public interface ApiService {
             @Field("idacc") int idacc,
             @Field("idnovel") int idnovel,
             @Field("idchapter") int idchapter
+    );
+    //lấy trang đọc
+    @FormUrlEncoded
+    @POST("getreadingpage.php")
+    Call<ArrayList<Reading>> getReadingPage(
+            @Field("idchapter") String idchapter
     );
 
 }
