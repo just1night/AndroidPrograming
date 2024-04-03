@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.api.ApiService;
+import com.example.myapplication.api.BookmarkResponse;
 import com.example.myapplication.api.CommentResponse;
 import com.example.myapplication.api.LoginResponse;
 import com.example.myapplication.api.RatingResponse;
@@ -23,6 +24,7 @@ import com.example.myapplication.api.RetrofitClient;
 import com.example.myapplication.api.VoteResponse;
 import com.example.myapplication.chapter.Chapter;
 import com.example.myapplication.chapter.ChapterAdapter;
+import com.example.myapplication.chapter.IClickchapter;
 import com.example.myapplication.classobject.Account;
 
 import java.util.ArrayList;
@@ -118,7 +120,14 @@ public class NovelInfor extends AppCompatActivity {
             public void onResponse(Call<ArrayList<Chapter>> call, Response<ArrayList<Chapter>> response) {
                 if(response.isSuccessful()){
                     lstChapter = response.body();
-                    chapterAdapter.setChapters(lstChapter);
+                    chapterAdapter.setChapters(lstChapter, new IClickchapter() {
+                        @Override
+                        public void onClickChapter(Chapter chapter) {
+                            Account account = Account.getInstance();
+                            int idacc =  account.getId();
+                            onClickDetail( idacc , chapter.getIDnovel(), chapter.getID());
+                        }
+                    });
                     rcvChapter.setAdapter(chapterAdapter);
                 }else {
                     Toast.makeText(NovelInfor.this, "không lấy được dữ liệu", Toast.LENGTH_SHORT).show();
@@ -132,6 +141,39 @@ public class NovelInfor extends AppCompatActivity {
         });
     }
 
+    private void onClickDetail(int idacc, int iDnovel, int idchapter) {
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        Call<BookmarkResponse> call = apiService.checkBookMark(idacc,iDnovel,idchapter);
+        call.enqueue(new Callback<BookmarkResponse>() {
+            @Override
+            public void onResponse(Call<BookmarkResponse> call, Response<BookmarkResponse> response) {
+                BookmarkResponse bookmarkResponse = response.body();
+                if(response.isSuccessful()){
+                    if(bookmarkResponse.isRead()){
+                        Toast.makeText(NovelInfor.this, bookmarkResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent();
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("idchapter",idchapter);
+                        i.putExtras(bundle);
+                        i.setClass(NovelInfor.this,ReadingPage.class);
+                        startActivity(i);
+
+                    }else{
+                        Toast.makeText(NovelInfor.this, bookmarkResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+                }else{
+                    // Xử lý khi có lỗi trên máy chủ
+                    Toast.makeText(NovelInfor.this, "Server error", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BookmarkResponse> call, Throwable t) {
+                Toast.makeText(NovelInfor.this,  t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 
     private void takeVote(int idacc,int idnovel,float rating){

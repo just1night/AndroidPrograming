@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,12 +18,14 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
 
     private Context mContext;
     private ArrayList<Chapter> chapters;
+    private IClickchapter iClickchapter;
 
     public ChapterAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
-    public void setChapters(ArrayList<Chapter> chapters) {
+    public void setChapters(ArrayList<Chapter> chapters,IClickchapter iClickchapter) {
+        this.iClickchapter = iClickchapter;
         this.chapters = chapters;
         notifyDataSetChanged();
     }
@@ -40,6 +43,12 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
         if(chapter == null)
             return;
         holder.chapterName.setText("Chapter "+(position+1)+" :"+chapter.getName());
+        holder.layoutitem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iClickchapter.onClickChapter(chapter);
+            }
+        });
     }
 
     @Override
@@ -50,9 +59,11 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
     }
 
     public class ChapterViewHolder extends RecyclerView.ViewHolder {
+        RelativeLayout layoutitem;
         TextView chapterName;
         public ChapterViewHolder(@NonNull View itemView) {
             super(itemView);
+            layoutitem = itemView.findViewById(R.id.chapterx);
             chapterName = itemView.findViewById(R.id.textView3);
         }
     }

@@ -62,9 +62,19 @@ public interface ApiService {
             @Field("idacc") int idacc,
             @Field("content") String content
     );
+    //Lấy list chapter truyện
     @FormUrlEncoded
     @POST("getchapter.php")
     Call<ArrayList<Chapter>> getChapter(
             @Field("idnovel") int idnovel
     );
+    //xác nhận lịch sử đọc
+    @FormUrlEncoded
+    @POST("checkbookmark.php")
+    Call<BookmarkResponse> checkBookMark(
+            @Field("idacc") int idacc,
+            @Field("idnovel") int idnovel,
+            @Field("idchapter") int idchapter
+    );
+
 }
