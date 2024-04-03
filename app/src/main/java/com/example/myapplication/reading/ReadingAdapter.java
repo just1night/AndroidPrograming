@@ -41,12 +41,12 @@ public class ReadingAdapter extends RecyclerView.Adapter<ReadingAdapter.ReadingV
 
     @Override
     public void onBindViewHolder(@NonNull ReadingViewHolder holder, int position) {
-        Reading reading = readings.get(position);
+        final Reading reading = readings.get(position);
         if(reading == null)
             return;
         String url = reading.getImg();
-        Glide.with(holder.itemView).load(url).into(holder.readingImg);
-        holder.readingContent.setText(reading.getContent());
+        if(!url.isEmpty()) Glide.with(holder.itemView).load(url).into(holder.readingImg);
+        if(!reading.getContent().isEmpty()) holder.readingContent.setText(reading.getContent());
     }
 
     @Override
@@ -57,8 +57,8 @@ public class ReadingAdapter extends RecyclerView.Adapter<ReadingAdapter.ReadingV
     }
 
     public class ReadingViewHolder extends RecyclerView.ViewHolder {
-        private TextView readingContent;
-        private ImageView readingImg;
+        TextView readingContent;
+        ImageView readingImg;
         public ReadingViewHolder(@NonNull View itemView) {
             super(itemView);
             readingContent = itemView.findViewById(R.id.content_list);

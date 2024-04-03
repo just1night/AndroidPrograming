@@ -81,7 +81,7 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("getreadingpage.php")
     Call<ArrayList<Reading>> getReadingPage(
-            @Field("idchapter") String idchapter
+            @Field("idchapter") int idchapter
     );
 
 }

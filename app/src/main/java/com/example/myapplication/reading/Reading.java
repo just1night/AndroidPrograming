@@ -6,6 +6,7 @@ public class Reading {
     private int id;
     private int idchapter;
     private String img;
+    @SerializedName("textcontent")
     private String content;
 
     public Reading(int id, int idchapter, String img, String content) {

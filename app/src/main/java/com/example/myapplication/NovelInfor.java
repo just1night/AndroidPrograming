@@ -125,12 +125,18 @@ public class NovelInfor extends AppCompatActivity {
                             Account account = Account.getInstance();
                             int idacc =  account.getId();
                             onClickDetail( idacc , chapter.getIDnovel(), chapter.getID());
+                            Intent intent1 = new Intent();
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("key_id",chapter.getID());
+                            intent1.putExtras(bundle);
+                            intent1.setClass(NovelInfor.this, ReadingPage.class);
+                            startActivity(intent1);
                         }
                     });
                     rcvChapter.setAdapter(chapterAdapter);
-                }else {
-                    Toast.makeText(NovelInfor.this, "không lấy được dữ liệu", Toast.LENGTH_SHORT).show();
-                }
+                    }else {
+                        Toast.makeText(NovelInfor.this, "không lấy được dữ liệu", Toast.LENGTH_SHORT).show();
+                    }
             }
 
             @Override
@@ -150,16 +156,10 @@ public class NovelInfor extends AppCompatActivity {
                 if(response.isSuccessful()){
                     if(bookmarkResponse.isRead()){
                         Toast.makeText(NovelInfor.this, bookmarkResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent();
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("idchapter",idchapter);
-                        i.putExtras(bundle);
-                        i.setClass(NovelInfor.this, ReadingPage.class);
-                        startActivity(i);
-
                     }else{
                         Toast.makeText(NovelInfor.this, bookmarkResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     }
+
 
                 }else{
                     // Xử lý khi có lỗi trên máy chủ

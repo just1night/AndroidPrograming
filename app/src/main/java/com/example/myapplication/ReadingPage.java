@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.telecom.Call;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.myapplication.api.ApiService;
 import com.example.myapplication.api.RetrofitClient;
 import com.example.myapplication.reading.IClickreading;
@@ -17,52 +19,65 @@ import com.example.myapplication.reading.ReadingAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReadingPage extends AppCompatActivity {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-    private RecyclerView rcvReading;
+public class ReadingPage extends AppCompatActivity {
     private ReadingAdapter readingAdapter;
+    private RecyclerView rcvReading;
+
+    private ArrayList<Reading> readings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reading_page);
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
+        Intent intent1 = getIntent();
+        Bundle bundle = intent1.getExtras();
 
-        String id = bundle.getString("idchaper");
+        int id = bundle.getInt("key_id");
 
-
+        TextView txt = findViewById(R.id.tvtitlechapter);
+        txt.setText(Integer.toString(id));
 
 
         rcvReading = findViewById(R.id.rcvreading);
         readingAdapter = new ReadingAdapter(this);
+
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rcvReading.setLayoutManager(linearLayoutManager);
         getReadingPagelist(id);
 
 
+
+
     }
 
-    private void getReadingPagelist(String id) {
+
+    private void getReadingPagelist(int idchapter) {
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-        Call<ArrayList<Reading>> call = apiService.GetReadingPage(id);
+        Call<ArrayList<Reading>> call = apiService.getReadingPage(idchapter);
+        call.enqueue(new Callback<ArrayList<Reading>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Reading>> call, Response<ArrayList<Reading>> response) {
+                if (response.isSuccessful()) {
+                    readings = response.body();
+                    readingAdapter.setReadings(readings);
+                    // Chỉ thiết lập adapter sau khi nhận được dữ liệu thành công
+                    rcvReading.setAdapter(readingAdapter);
+                } else {
+                    Toast.makeText(ReadingPage.this, "không lấy được dữ liệu", Toast.LENGTH_SHORT).show();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<ArrayList<Reading>> call, Throwable t) {
+                Toast.makeText(ReadingPage.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    private List<Reading> getContent() {
-        List<Reading> readings = new ArrayList<>();
-        readings.add(new Reading(1, 1, "https://i.imgur.com/1.jpg", "Content 1"));
-        readings.add(new Reading(2, 1, "https://i.imgur.com/2.jpg", "Content 2"));
-        readings.add(new Reading(3, 1, "https://i.imgur.com/3.jpg", "Content 3"));
-        readings.add(new Reading(4, 1, "https://i.imgur.com/4.jpg", "Content 4"));
-        readings.add(new Reading(5, 1, "https://i.imgur.com/5.jpg", "Content 5"));
-        readings.add(new Reading(6, 1, "https://i.imgur.com/6.jpg", "Content 6"));
-        readings.add(new Reading(7, 1, "https://i.imgur.com/7.jpg", "Content 7"));
-        readings.add(new Reading(8, 1, "https://i.imgur.com/8.jpg", "Content 8"));
-        readings.add(new Reading(9, 1, "https://i.imgur.com/9.jpg", "Content 9"));
-        readings.add(new Reading(10, 1, "https://i.imgur.com/10.jpg", "Content 10"));
-        return readings;
-    }
 }

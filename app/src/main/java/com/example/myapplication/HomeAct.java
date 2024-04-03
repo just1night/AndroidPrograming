@@ -85,8 +85,8 @@ public class HomeAct extends AppCompatActivity {
                     // Sử dụng dữ liệu ở đây
                     // Ví dụ: categoryadapter.setData(lstnv);
                     lst.add(new Category("Truyện đang nổi",lstnv));
-                    lst.add(new Category("Truyện hay",lstnv));
-                    lst.add(new Category("Truyện tình cảm",lstnv));
+                    //lst.add(new Category("Truyện hay",lstnv));
+                    //lst.add(new Category("Truyện tình cảm",lstnv));
                     categoryadapter.setData(lst);
                     rv.setAdapter(categoryadapter);
                 } else {

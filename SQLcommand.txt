@@ -67,8 +67,8 @@ CREATE TABLE `history` (
 CREATE TABLE `reading` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idchapter` int(11) NOT NULL,
-  `img` text ,
-  `textcontent` text ,
+  `img` text NOT NULL,
+  `textcontent` text NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`idchapter`) REFERENCES `chapter`(`ID`));
 );
