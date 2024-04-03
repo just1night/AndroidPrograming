@@ -64,11 +64,11 @@ CREATE TABLE `history` (
 );
 
 -- Tạo bảng trang
-CREATE TABLE `content` (
+CREATE TABLE `reading` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idchapter` int(11) NOT NULL,
   `img` text ,
   `textcontent` text ,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`idchapter`) REFERENCES `apptruyendb_chapter`(`ID`));
+  FOREIGN KEY (`idchapter`) REFERENCES `chapter`(`ID`));
 );
