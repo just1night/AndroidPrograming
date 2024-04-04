@@ -8,46 +8,49 @@
     android:id="@+id/homelayout"
     android:scrollbars="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="24dp"
-                android:layout_marginTop="40dp"
-                android:text="Stay trending!"
-                android:textAlignment="center"
-
-                />
-
-            <TextView
-                android:id="@+id/usernamehome"
-                android:layout_width="match_parent"
-                android:layout_height="37dp"
-                android:layout_marginTop="16dp"
-                android:text="Username"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                />
-            <androidx.appcompat.widget.SearchView
-                android:layout_width="340dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="35dp"/>
-
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:id="@+id/rcv_category"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="220dp" />
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:layout_marginTop="40dp"
+            android:text="Stay trending!"
+            android:textAlignment="center"
+
+            />
+
+        <TextView
+            android:id="@+id/usernamehome"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:layout_marginTop="16dp"
+            android:text="Username"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+        <androidx.appcompat.widget.SearchView
+            android:layout_width="340dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="20dp" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv_category"
+        android:layout_width="401dp"
+        android:layout_height="364dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="220dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@id/cardlastseen"/>
+    <LinearLayout
+        android:id="@+id/cardlastseen"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -91,21 +94,22 @@
                     android:id="@+id/txtnovelname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="tên truyện"
+                    android:textAlignment="center"
+                    android:text="Hiện chưa từng"
                     android:textSize="18dp"
                     android:layout_marginBottom="10dp"/>
                 <TextView
                     android:id="@+id/txtchaptername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Tên Chap"/>
+                    android:textAlignment="center"
+                    android:text="Xem truyện"/>
             </LinearLayout>
                 <ImageView
                      android:layout_marginTop="10dp"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:background="@drawable/baseline_arrow_right_24_bar"
-
                     />
 
 

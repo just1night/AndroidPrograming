@@ -57,4 +57,24 @@ class Message
         }
         return $json;
     }
+
+    public function listComment($idnovel)
+    {
+        $query = "SELECT account.Useracc as user,rate.rating , comment.content
+        FROM " . $this->db_table . "
+        INNER JOIN account ON account.ID = comment.IDacc
+        INNER JOIN rate ON rate.idnovel = comment.IDnovel AND rate.idacc = comment.IDacc
+        WHERE comment.idnovel = '$idnovel' ORDER BY comment.id DESC";
+        $result = mysqli_query($this->db->getDb(), $query);
+        if (mysqli_num_rows($result) > 0) {
+            $data = array();
+            while ($row = mysqli_fetch_assoc($result)) {
+                $data[] = $row;
+            }
+            mysqli_close($this->db->getDb());
+            return $data;
+        }
+        mysqli_close($this->db->getDb());
+        return false;
+    }
 }

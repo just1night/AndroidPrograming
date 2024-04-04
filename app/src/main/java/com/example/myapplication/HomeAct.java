@@ -30,7 +30,8 @@ public class HomeAct extends AppCompatActivity {
     private RecyclerView rv;
     private CategoryAdapter categoryadapter;
 
-    private ArrayList<Novel> lstnv;
+    private ArrayList<Novel> lstnv5,lstnv;
+    private ArrayList<Category> lst;
 
     private TextView useracc;
 
@@ -38,6 +39,7 @@ public class HomeAct extends AppCompatActivity {
 
     private  TextView txtchapter,txtnovel;
     private CardView lastseen;
+
 
     private LastSeenResponse lastSeenResponse;
     private String valueShowname;
@@ -60,7 +62,10 @@ public class HomeAct extends AppCompatActivity {
         lastseen = findViewById(R.id.lastseenlayout);
 
         account = Account.getInstance();
+        account.setUsername(valueShowname);
         getUser(valueShowname);
+
+
 
     }
 
@@ -74,8 +79,14 @@ public class HomeAct extends AppCompatActivity {
         LinearLayoutManager linearlayoutmanager = new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
         rv.setLayoutManager(linearlayoutmanager);
 
+
+
+        lst = new ArrayList<>();
         lstnv = new ArrayList<>();
+        getlistnovel();
+        lstnv5 = new ArrayList<>();
         Callgettop5();
+
         getUser(valueShowname);
     }
 
@@ -91,6 +102,7 @@ public class HomeAct extends AppCompatActivity {
             @Override
             public void onResponse(Call<LastSeenResponse> call, Response<LastSeenResponse> response) {
                 if(response.isSuccessful()){
+
                     lastSeenResponse = response.body();
                     if(!lastSeenResponse.getChaptername().equals("")) txtchapter.setText(lastSeenResponse.getChaptername());
                     txtnovel.setText(lastSeenResponse.getNovelname());
@@ -115,8 +127,9 @@ public class HomeAct extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<LastSeenResponse> call, Throwable t) {
+
                 // Xử lý khi có lỗi kết nối
-                Toast.makeText(HomeAct.this,  t.getMessage(), Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(HomeAct.this,  t.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -132,14 +145,37 @@ public class HomeAct extends AppCompatActivity {
             public void onResponse(Call<ArrayList<Novel>> call, Response<ArrayList<Novel>> response) {
                 if (response.isSuccessful()) {
                     // Phản hồi từ máy chủ thành công
-                    lstnv = response.body();
-                    ArrayList<Category> lst = new ArrayList<>();
-
+                    lstnv5 = response.body();
                     // Sử dụng dữ liệu ở đây
                     // Ví dụ: categoryadapter.setData(lstnv);
-                    lst.add(new Category("Truyện đang nổi",lstnv));
-                    //lst.add(new Category("Truyện hay",lstnv));
-                    //lst.add(new Category("Truyện tình cảm",lstnv));
+                    lst.add(new Category("Truyện đang nổi",lstnv5));
+
+                } else {
+                    // Xử lý khi có phản hồi không thành công
+                    // Ví dụ: Hiển thị thông báo lỗi
+                    Toast.makeText(HomeAct.this, "Không thể nhận dữ liệu từ máy chủ", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Novel>> call, Throwable t) {
+            // Xử lý khi có lỗi kết nối
+                Toast.makeText(HomeAct.this,  t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void getlistnovel(){
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+
+
+        Call<ArrayList<Novel>> call = apiService.Getlist("");
+        call.enqueue(new Callback<ArrayList<Novel>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Novel>> call, Response<ArrayList<Novel>> response) {
+                if (response.isSuccessful()) {
+                    // Phản hồi từ máy chủ thành công
+                    lstnv = response.body();
+                    lst.add(new Category("Truyện ",lstnv));
                     categoryadapter.setData(lst);
                     rv.setAdapter(categoryadapter);
                 } else {
@@ -151,7 +187,7 @@ public class HomeAct extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ArrayList<Novel>> call, Throwable t) {
-            // Xử lý khi có lỗi kết nối
+                // Xử lý khi có lỗi kết nối
                 Toast.makeText(HomeAct.this,  t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

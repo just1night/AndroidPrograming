@@ -25,6 +25,8 @@ import com.example.myapplication.chapter.Chapter;
 import com.example.myapplication.chapter.ChapterAdapter;
 import com.example.myapplication.chapter.IClickchapter;
 import com.example.myapplication.classobject.Account;
+import com.example.myapplication.comment.Comment;
+import com.example.myapplication.comment.CommentAdapter;
 
 import java.util.ArrayList;
 
@@ -33,11 +35,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class NovelInfor extends AppCompatActivity {
-    private RecyclerView rcvChapter;
+    private RecyclerView rcvChapter,rsvComment;
     private ChapterAdapter chapterAdapter;
+    private CommentAdapter commentAdapter;
     private ArrayList<Chapter> lstChapter;
+    private ArrayList<Comment> lstComment;
+
     private int valueShowidnovel;
     private TextView countchap;
+
+    private RatingBar vote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +85,7 @@ public class NovelInfor extends AppCompatActivity {
         Account account = Account.getInstance();
         int idacc =  account.getId();
 
-        RatingBar vote = findViewById(R.id.ratingBar);
+        vote = findViewById(R.id.ratingBar);
 
         TextView rate = findViewById(R.id.ratingtxt);
 
@@ -102,15 +109,14 @@ public class NovelInfor extends AppCompatActivity {
             }
         });
 
-
-
+        rcvChapter = findViewById(R.id.rcvChapter);
+        rsvComment = findViewById(R.id.rcvListcom);
     }
-
     @Override
     protected void onResume() {
         super.onResume();
         //Recycle view chapter
-        rcvChapter = findViewById(R.id.rcvChapter);
+
         chapterAdapter = new ChapterAdapter(this);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
@@ -118,7 +124,34 @@ public class NovelInfor extends AppCompatActivity {
         getListChapter(valueShowidnovel);
         //chapterAdapter.setChapters(getListChapter(valueShowidnovel));
 
+//        listcomment
+
+        commentAdapter = new CommentAdapter(this);
+        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        rsvComment.setLayoutManager(linearLayoutManager1);
+        getListComment(valueShowidnovel);
     }
+    private void getListComment(int idnovel) {
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        Call<ArrayList<Comment>> call = apiService.getListComment(idnovel);
+        call.enqueue(new Callback<ArrayList<Comment>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Comment>> call, Response<ArrayList<Comment>> response) {
+                if(response.isSuccessful()){
+                    lstComment = response.body();
+                    commentAdapter.setComments(lstComment);
+                    rsvComment.setAdapter(commentAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Comment>> call, Throwable t) {
+
+            }
+        });
+    }
+
+
 
     private void getListChapter(int idNovel) {
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
@@ -129,8 +162,9 @@ public class NovelInfor extends AppCompatActivity {
                 if(response.isSuccessful()){
                     lstChapter = new ArrayList<>();
                     lstChapter = response.body();
+
                     int count = lstChapter.size();
-                    countchap.setText(Integer.toString(count));
+                    countchap.setText(String.valueOf(count));
                     chapterAdapter.setChapters(lstChapter, new IClickchapter() {
                         @Override
                         public void onClickChapter(Chapter chapter) {
@@ -222,7 +256,7 @@ public class NovelInfor extends AppCompatActivity {
             public void onResponse(Call<RatingResponse> call, Response<RatingResponse> response) {
                 if(response.isSuccessful()){
                     RatingResponse ratingResponse = response.body();
-                    String x = String.valueOf(ratingResponse.getAVG());
+                    String x = String.format("%.1f",ratingResponse.getAVG());
                     TextView vote = findViewById(R.id.ratingtxt);
                     vote.setText(x+"/5");
                 }else {
@@ -246,6 +280,7 @@ public class NovelInfor extends AppCompatActivity {
                 if(response.isSuccessful()){
                     CommentResponse commentResponse = response.body();
                     if(commentResponse.isSuccess()) {
+
                         Toast.makeText(NovelInfor.this,commentResponse.getMessage(),Toast.LENGTH_SHORT).show();
                     }else {
                         Toast.makeText(NovelInfor.this, commentResponse.getMessage(), Toast.LENGTH_SHORT).show();

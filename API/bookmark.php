@@ -60,18 +60,18 @@ class BookMark
 
     public function latestmarked($idacc)
     {
+        $row = array();
         $query = "SELECT history.IDnovel, novel.name as novelname, history.IDchapter, chapter.Name as chaptername
         FROM history 
         INNER JOIN chapter ON history.IDchapter = chapter.ID 
         INNER JOIN novel ON history.IDnovel = novel.ID 
         WHERE history.IDacc = '$idacc' ORDER BY history.bookmark DESC LIMIT 1;";
         $result = mysqli_query($this->db->getDb(), $query);
+
         if (mysqli_num_rows($result) > 0) {
             $row = mysqli_fetch_assoc($result);
-            mysqli_close($this->db->getDb());
-            return $row;
         }
         mysqli_close($this->db->getDb());
-        return false;
+        return $row;
     }
 }

@@ -2,6 +2,7 @@ package com.example.myapplication.api;
 
 import com.example.myapplication.chapter.Chapter;
 import com.example.myapplication.classobject.Account;
+import com.example.myapplication.comment.Comment;
 import com.example.myapplication.novel.Novel;
 import com.example.myapplication.reading.Reading;
 
@@ -10,7 +11,6 @@ import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface ApiService {
@@ -35,6 +35,11 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("gettopnovel.php")
     Call<ArrayList<Novel>> Getlist5(@Field("") String dummy);
+
+    //lấy truyên
+    @FormUrlEncoded
+    @POST("getnovel.php")
+    Call<ArrayList<Novel>> Getlist(@Field("") String dummy);
 
     @FormUrlEncoded
     @POST("loaduser.php")
@@ -69,6 +74,7 @@ public interface ApiService {
     Call<ArrayList<Chapter>> getChapter(
             @Field("idnovel") int idnovel
     );
+
     //xác nhận lịch sử đọc
     @FormUrlEncoded
     @POST("checkbookmark.php")
@@ -89,5 +95,11 @@ public interface ApiService {
     @POST("getLatestmarked.php")
     Call<LastSeenResponse> getlastSeen(
             @Field("idacc") int idacc
+    );
+    //list comment
+    @FormUrlEncoded
+    @POST("getlistmess.php")
+    Call<ArrayList<Comment>> getListComment(
+            @Field("idnovel") int idnovel
     );
 }

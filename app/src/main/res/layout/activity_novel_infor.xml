@@ -141,7 +141,7 @@
                         android:id="@+id/chaptertxt"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
-                        android:text="Vote"
+                        android:text="0"
                         android:textStyle="bold"
                         android:textAlignment="center"
                         android:textSize="18sp" />
@@ -231,12 +231,17 @@
         android:textStyle="bold"
         />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="7dp">
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvChapter"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_marginTop="20dp"
             android:scrollbars="vertical"/>
+    </androidx.cardview.widget.CardView>
 
 
 
@@ -250,9 +255,12 @@
         >
         <RatingBar
             android:id="@+id/ratingBar"
+            android:progressTint="#a2b2fc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:numStars="5" />
+            android:numStars="5"
+            android:scaleX="0.8"
+            android:scaleY="0.8"/>
         <Button
             android:id="@+id/btndanhgia"
             android:layout_marginLeft="5dp"
@@ -291,8 +299,18 @@
 
     </androidx.cardview.widget.CardView>
 
-
-
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    app:cardCornerRadius="7dp">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvListcom"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:scrollbars="vertical">
+    </androidx.recyclerview.widget.RecyclerView>
+</androidx.cardview.widget.CardView>
 
 
 

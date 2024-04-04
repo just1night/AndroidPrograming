@@ -37,7 +37,22 @@ class User
         return false;
     }
 
+    public function checkPasswordFormat($password)
+    {
+        // Mật khẩu phải có ít nhất 8 ký tự
+        // Mật khẩu phải chứa ít nhất một chữ cái viết hoa
+        // Mật khẩu phải chứa ít nhất một chữ cái viết thường
+        // Mật khẩu phải chứa ít nhất một số
+        // Mật khẩu có thể chứa các ký tự đặc biệt như !@#$%^&*
+        $pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/';
 
+        // Sử dụng hàm preg_match() để kiểm tra mật khẩu với biểu thức chính quy
+        if (preg_match($pattern, $password)) {
+            return true; // Mật khẩu đáp ứng yêu cầu định dạng
+        } else {
+            return false; // Mật khẩu không đáp ứng yêu cầu định dạng
+        }
+    }
 
     public function isLoginExist($username, $password)
     {
@@ -93,23 +108,26 @@ class User
         } else {
 
             $isValid = $this->isValidEmail($email);
-
             if ($isValid) {
-                $query = "insert into " . $this->db_table . " (Useracc, Email, pass) values ('$username','$email' ,'$password')";
+                if ($this->checkPasswordFormat($password)) {
+                    $query = "insert into " . $this->db_table . " (Useracc, Email, pass) values ('$username','$email' ,'$password')";
 
-                $inserted = mysqli_query($this->db->getDb(), $query);
+                    $inserted = mysqli_query($this->db->getDb(), $query);
 
-                if ($inserted == true) {
+                    if ($inserted == true) {
 
-                    $json['success'] = true;
-                    $json['message'] = "Successfully registered the user";
+                        $json['success'] = true;
+                        $json['message'] = "Successfully registered the user";
+                    } else {
+
+                        $json['success'] = false;
+                        $json['message'] = "Error in registering. Probably the username/email already exists";
+                    }
+                    mysqli_close($this->db->getDb());
                 } else {
-
                     $json['success'] = false;
-                    $json['message'] = "Error in registering. Probably the username/email already exists";
+                    $json['message'] = "Error in registering. Probably the wrong password format";
                 }
-
-                mysqli_close($this->db->getDb());
             } else {
                 $json['success'] = false;
                 $json['message'] = "Error in registering. Email Address is not valid";
