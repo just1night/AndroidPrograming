@@ -76,7 +76,7 @@ public class HomeAct extends AppCompatActivity {
 
         lstnv = new ArrayList<>();
         Callgettop5();
-        getlastseeninfor(account.getId());
+        getUser(valueShowname);
     }
 
     @Override
@@ -164,6 +164,7 @@ public class HomeAct extends AppCompatActivity {
             public void onResponse(Call<Account> call, Response<Account> response) {
                 if(response.isSuccessful()){
                     Account a = response.body();
+                    getlastseeninfor(a.getId());
                     //Tạo biến toàn cục
                     //gán dữ liệu
                     account.setId(a.getId());
