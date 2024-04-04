@@ -2,21 +2,24 @@
 include_once 'config.php';
 require_once 'message.php';
 
-$idacc = "";
 
 $idnovel = "";
+
+$idacc = "";
 
 $content = "";
 
 
-if (isset($_POST['idacc'])) {
 
-    $idacc = $_POST['idacc'];
-}
 
 if (isset($_POST['idnovel'])) {
 
     $idnovel = $_POST['idnovel'];
+}
+
+if (isset($_POST['idacc'])) {
+
+    $idacc = $_POST['idacc'];
 }
 
 if (isset($_POST['content'])) {

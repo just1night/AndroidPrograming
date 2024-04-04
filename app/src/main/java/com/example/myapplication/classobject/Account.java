@@ -25,11 +25,6 @@ public class Account {
         return  instance;
     }
 
-
-
-
-
-
 // Normal Object code
 
 

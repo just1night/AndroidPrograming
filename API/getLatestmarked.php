@@ -3,7 +3,7 @@
 require_once 'bookmark.php';
 
 
-$idacc = "1";
+$idacc = "";
 
 
 if (isset($_POST['idacc'])) {

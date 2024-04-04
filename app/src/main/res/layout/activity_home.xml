@@ -66,6 +66,7 @@
             android:textSize="16dp"
             android:textStyle="bold"/>
         <androidx.cardview.widget.CardView
+            android:id="@+id/lastseenlayout"
             app:cardCornerRadius="30dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="15dp"
@@ -75,7 +76,6 @@
             android:layout_height="80dp"
             android:textColor="@color/black"
             android:backgroundTint="#FFFFFF"
-            android:id="@+id/bookmarkbutton"
             >
             <LinearLayout
                 android:layout_width="match_parent"
@@ -88,12 +88,14 @@
                 android:layout_marginTop="10dp"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/txtnovelname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="tên truyện"
                     android:textSize="18dp"
                     android:layout_marginBottom="10dp"/>
                 <TextView
+                    android:id="@+id/txtchaptername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Tên Chap"/>

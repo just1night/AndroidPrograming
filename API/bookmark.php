@@ -13,7 +13,7 @@ class BookMark
 
     public function makecheckHistory($idacc, $idnovel, $idchapter)
     {
-        $query = "SELECT `IDacc`, `IDnovel`, `IDchapter`, `bookmark` FROM ".$this->db_table." WHERE `IDacc`='$idacc' and `IDnovel`= '$idnovel' and `IDchapter` ='$idchapter'";
+        $query = "SELECT `IDacc`, `IDnovel`, `IDchapter`, `bookmark` FROM " . $this->db_table . " WHERE `IDacc`='$idacc' and `IDnovel`= '$idnovel' and `IDchapter` ='$idchapter'";
         $result = mysqli_query($this->db->getDb(), $query);
         if (mysqli_num_rows($result) > 0) {
             return true;
@@ -60,7 +60,11 @@ class BookMark
 
     public function latestmarked($idacc)
     {
-        $query = "SELECT * FROM " . $this->db_table . " WHERE IDacc = '$idacc'  ORDER BY bookmark DESC LIMIT 1";
+        $query = "SELECT history.IDnovel, novel.name as novelname, history.IDchapter, chapter.Name as chaptername
+        FROM history 
+        INNER JOIN chapter ON history.IDchapter = chapter.ID 
+        INNER JOIN novel ON history.IDnovel = novel.ID 
+        WHERE history.IDacc = '$idacc' ORDER BY history.bookmark DESC LIMIT 1;";
         $result = mysqli_query($this->db->getDb(), $query);
         if (mysqli_num_rows($result) > 0) {
             $row = mysqli_fetch_assoc($result);

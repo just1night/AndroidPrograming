@@ -3,7 +3,7 @@ include_once 'config.php';
 require_once 'user.php';
 
 
-$username = "huy";
+$username = "";
 if (isset($_POST['username'])) {
 
     $username = $_POST['username'];

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,24 +39,35 @@ public class ReadingPage extends AppCompatActivity {
         setContentView(R.layout.activity_reading_page);
 
 
-        Intent intent1 = getIntent();
-        Bundle bundle = intent1.getExtras();
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        int id = 0;
+        String namechap = "";
+        if(bundle!=null){
+            String fromActivity = bundle.getString("key_from_activity");
+            if("Novelinfor".equals(fromActivity)){
+                id = bundle.getInt("key_id");
+                namechap = bundle.getString("key_chapter");
+            } else if ("HomeAct".equals(fromActivity)) {
+                id= bundle.getInt("key_lastid");
+                namechap = bundle.getString("key_lastchapter");
+            }
 
-
-        int id = bundle.getInt("key_id");
-
+        }
         TextView txt = findViewById(R.id.tvtitlechapter);
-        txt.setText(Integer.toString(id));
-
-
+        txt.setText(namechap);
         rcvReading = findViewById(R.id.rcvreading);
         readingAdapter = new ReadingAdapter(this);
-
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rcvReading.setLayoutManager(linearLayoutManager);
         getReadingPagelist(id);
-
+        TextView goback = findViewById(R.id.go_back_chapter);
+        goback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
 

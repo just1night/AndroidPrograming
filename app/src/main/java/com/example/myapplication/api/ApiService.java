@@ -84,4 +84,10 @@ public interface ApiService {
             @Field("idchapter") int idchapter
     );
 
+    //lấy lần cuối đọc trang
+    @FormUrlEncoded
+    @POST("getLatestmarked.php")
+    Call<LastSeenResponse> getlastSeen(
+            @Field("idacc") int idacc
+    );
 }

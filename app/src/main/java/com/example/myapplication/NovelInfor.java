@@ -36,7 +36,8 @@ public class NovelInfor extends AppCompatActivity {
     private RecyclerView rcvChapter;
     private ChapterAdapter chapterAdapter;
     private ArrayList<Chapter> lstChapter;
-
+    private int valueShowidnovel;
+    private TextView countchap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +49,10 @@ public class NovelInfor extends AppCompatActivity {
         TextView info  = findViewById(R.id.name_infor);
         TextView aut = findViewById(R.id.authortxt);
         TextView discrp = findViewById(R.id.discriptxt);
+        countchap = findViewById(R.id.chaptertxt);
         Intent i = getIntent();
         Bundle bundle = i.getExtras();
-        int valueShowidnovel = bundle.getInt("idnovel");
+        valueShowidnovel = bundle.getInt("idnovel");
         String valueShowname = bundle.getString( "name");
         String valueShowimg = bundle.getString("img");
         String valueShowauthor = bundle.getString("aut");
@@ -100,7 +102,14 @@ public class NovelInfor extends AppCompatActivity {
             }
         });
 
-    //Recycle view chapter
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Recycle view chapter
         rcvChapter = findViewById(R.id.rcvChapter);
         chapterAdapter = new ChapterAdapter(this);
 
@@ -118,7 +127,10 @@ public class NovelInfor extends AppCompatActivity {
             @Override
             public void onResponse(Call<ArrayList<Chapter>> call, Response<ArrayList<Chapter>> response) {
                 if(response.isSuccessful()){
+                    lstChapter = new ArrayList<>();
                     lstChapter = response.body();
+                    int count = lstChapter.size();
+                    countchap.setText(Integer.toString(count));
                     chapterAdapter.setChapters(lstChapter, new IClickchapter() {
                         @Override
                         public void onClickChapter(Chapter chapter) {
@@ -127,7 +139,9 @@ public class NovelInfor extends AppCompatActivity {
                             onClickDetail( idacc , chapter.getIDnovel(), chapter.getID());
                             Intent intent1 = new Intent();
                             Bundle bundle = new Bundle();
+                            bundle.putString("key_from_activity","Novelinfor");
                             bundle.putInt("key_id",chapter.getID());
+                            bundle.putString("key_chapter",chapter.getName());
                             intent1.putExtras(bundle);
                             intent1.setClass(NovelInfor.this, ReadingPage.class);
                             startActivity(intent1);

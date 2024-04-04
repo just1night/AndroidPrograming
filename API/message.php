@@ -34,18 +34,23 @@ class Message
     public function newComment($idnovel, $idacc, $content)
     {
         if ($this->isIdnovelExit($idnovel) == true && $this->isIdaccExit($idacc) == true) {
-            $query = "INSERT INTO ".$this->db_table." (`IDnovel`, `IDacc`, `Content`) VALUES ('$idnovel','$idacc','$content')";
-            $inserted = mysqli_query($this->db->getDb(), $query);
-            if ($inserted == true) {
+            if ($content != null) {
+                $query = "INSERT INTO " . $this->db_table . " (`IDnovel`, `IDacc`, `Content`) VALUES ('$idnovel','$idacc','$content')";
+                $inserted = mysqli_query($this->db->getDb(), $query);
+                if ($inserted == true) {
 
-                $json['success'] = true;
-                $json['message'] = "Successfully sent";
+                    $json['success'] = true;
+                    $json['message'] = "Successfully sent";
+                } else {
+
+                    $json['success'] = false;
+                    $json['message'] = "Error in sending comment";
+                }
+                mysqli_close($this->db->getDb());
             } else {
-
                 $json['success'] = false;
-                $json['message'] = "Error in sending comment";
+                $json['message'] = "you did not comment";
             }
-            mysqli_close($this->db->getDb());
         } else {
             $json['success'] = false;
             $json['message'] = "Can not find user or novel to sent comment";

@@ -1,15 +1,19 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.api.ApiService;
+import com.example.myapplication.api.LastSeenResponse;
 import com.example.myapplication.api.RetrofitClient;
 import com.example.myapplication.category.Category;
 import com.example.myapplication.category.CategoryAdapter;
@@ -29,6 +33,15 @@ public class HomeAct extends AppCompatActivity {
     private ArrayList<Novel> lstnv;
 
     private TextView useracc;
+
+    private Account account ;
+
+    private  TextView txtchapter,txtnovel;
+    private CardView lastseen;
+
+    private LastSeenResponse lastSeenResponse;
+    private String valueShowname;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,13 +51,23 @@ public class HomeAct extends AppCompatActivity {
         useracc = findViewById(R.id.usernamehome);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        String valueShowname = bundle.getString("nameuser");
-        String valueShowpass = bundle.getString("pass");
+        valueShowname = bundle.getString("nameuser");
 
 
 
+        txtnovel = findViewById(R.id.txtnovelname);
+        txtchapter = findViewById(R.id.txtchaptername);
+        lastseen = findViewById(R.id.lastseenlayout);
 
+        account = Account.getInstance();
+        getUser(valueShowname);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        lastSeenResponse = new LastSeenResponse();
         rv = findViewById(R.id.rcv_category);
         categoryadapter = new CategoryAdapter(this);
 
@@ -53,22 +76,52 @@ public class HomeAct extends AppCompatActivity {
 
         lstnv = new ArrayList<>();
         Callgettop5();
-        getUser(valueShowname);
-
-
-
+        getlastseeninfor(account.getId());
     }
-//    private ArrayList<Category> getListCatagory(){
-//        ArrayList<Category> lst = new ArrayList<>();
-//
-//
-//        ArrayList<Novel> lstnovel = new ArrayList<>();
-//        lstnovel.add(new Novel("novel 1","https://gamek.mediacdn.vn/133514250583805952/2022/2/17/buy4-16450769457662019240304.jpg"));
-//        lstnovel.add(new Novel("novel 2","https://a.storyblok.com/f/178900/737x1200/2c3f2808d5/attack-on-titan.jpg/m/filters:quality(95)format(webp)"));
-//
-//        lst.add(new Category("Truyện đang nổi",lstnovel));
-//        return lst;
-//    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    private void getlastseeninfor(int id) {
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        Call<LastSeenResponse> call = apiService.getlastSeen(id);
+        call.enqueue(new Callback<LastSeenResponse>() {
+            @Override
+            public void onResponse(Call<LastSeenResponse> call, Response<LastSeenResponse> response) {
+                if(response.isSuccessful()){
+                    lastSeenResponse = response.body();
+                    if(!lastSeenResponse.getChaptername().equals("")) txtchapter.setText(lastSeenResponse.getChaptername());
+                    txtnovel.setText(lastSeenResponse.getNovelname());
+                    lastseen.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent i = new Intent();
+                            Bundle bundle = new Bundle();
+                            bundle.putString("key_from_activity","HomeAct");
+                            bundle.putInt("key_lastid",lastSeenResponse.getIDchapter());
+                            bundle.putString("key_lastchapter",lastSeenResponse.getChaptername());
+                            i.putExtras(bundle);
+                            i.setClass(HomeAct.this,ReadingPage.class);
+                            startActivity(i);
+                        }
+                    });
+
+                }else{
+                    Toast.makeText(HomeAct.this, "Không thể nhận dữ liệu từ máy chủ", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LastSeenResponse> call, Throwable t) {
+                // Xử lý khi có lỗi kết nối
+                Toast.makeText(HomeAct.this,  t.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
     private void Callgettop5(){
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
 
@@ -112,7 +165,6 @@ public class HomeAct extends AppCompatActivity {
                 if(response.isSuccessful()){
                     Account a = response.body();
                     //Tạo biến toàn cục
-                    Account account = Account.getInstance();
                     //gán dữ liệu
                     account.setId(a.getId());
                     account.setUsername(a.getUsername());

@@ -2,7 +2,7 @@
     include_once 'config.php';
     require_once 'readingpage.php';
 
-    $idchapter = "1";
+    $idchapter = "";
 
     if (isset($_POST['idchapter'])) {
         $idchapter = $_POST['idchapter'];

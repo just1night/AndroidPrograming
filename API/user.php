@@ -22,7 +22,6 @@ class User
         $this->db = new DbConnect();
     }
 
-    // hàm lấy thông tin user
     public function getuserinfor($username)
     {
         $query = "SELECT `ID`, `Useracc` FROM " . $this->db_table . " WHERE `Useracc`='$username' limit 1";
@@ -39,7 +38,7 @@ class User
     }
 
 
-    //check login user exist
+
     public function isLoginExist($username, $password)
     {
 
@@ -60,7 +59,6 @@ class User
         return false;
     }
 
-    //check email and username exist
     public function isEmailUsernameExist($username, $email)
     {
 
@@ -78,7 +76,6 @@ class User
         return false;
     }
 
-    //check email valid
     public function isValidEmail($email)
     {
         return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
@@ -122,7 +119,6 @@ class User
         return $json;
     }
 
-    //login user
     public function loginUsers($username, $password)
     {
 
