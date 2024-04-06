@@ -72,8 +72,9 @@ public class HomeAct extends AppCompatActivity {
         rv.setLayoutManager(linearlayoutmanager);
 
         lst = new ArrayList<>();
-        Callgettop5();
         getlistnovel();
+        Callgettop5();
+
 
     }
 
@@ -81,6 +82,7 @@ public class HomeAct extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         lastSeenResponse = new LastSeenResponse();
+
         getUser(valueShowname);
     }
 
@@ -141,8 +143,9 @@ public class HomeAct extends AppCompatActivity {
                     lstnv = new ArrayList<>();
 
                     lstnv = response.body();
-                    lst.add(new Category("Truyện ",lstnv));
-
+                    lst.add(new Category("Danh sách truyện ",lstnv));
+                    categoryadapter.setData(lst);
+                    rv.setAdapter(categoryadapter);
 
                 } else {
                     // Xử lý khi có phản hồi không thành công
@@ -173,7 +176,7 @@ public class HomeAct extends AppCompatActivity {
 
                     // Sử dụng dữ liệu ở đây
                     // Ví dụ: categoryadapter.setData(lstnv);
-                    lst.add(new Category("Truyện đang nổi",lstnv5));
+                    lst.add(new Category("Top 5 được đánh giá cao",lstnv5));
                     categoryadapter.setData(lst);
                     rv.setAdapter(categoryadapter);
                 } else {
