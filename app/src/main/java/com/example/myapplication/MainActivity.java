@@ -2,18 +2,17 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.api.ApiService;
 import com.example.myapplication.api.LoginResponse;
 import com.example.myapplication.api.RetrofitClient;
-import com.example.myapplication.novel.Novel;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,7 +52,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        TextView forgot = findViewById(R.id.forgetpasslink);
+        forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent();
+                i.setClass(MainActivity.this, Forgotpass.class);
+                startActivity(i);
+            }
+        });
     }
 
     private void LoginUser(String username, String password) {

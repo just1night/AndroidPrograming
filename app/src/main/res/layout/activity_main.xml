@@ -48,12 +48,12 @@
 
         <TextView
             android:id="@+id/forgetpasslink"
-            android:layout_width="123dp"
-            android:layout_height="30sp"
+            android:layout_width="174dp"
+            android:layout_height="36dp"
             android:layout_marginLeft="110sp"
-            android:autoLink="all"
             android:backgroundTint="@color/button_bgcolor"
-            android:text="forget password?" />
+            android:text="forget password?"
+            android:textSize="18dp" />
 
         <Button
             android:id="@+id/buttonLogin1"

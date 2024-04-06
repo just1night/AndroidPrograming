@@ -239,4 +239,34 @@ class User
         }
         return $json;
     }
+
+    public function getname($username)
+    {
+        $query = "SELECT * FROM " . $this->db_table . " WHERE `Useracc`='$username' limit 1";
+        $result = mysqli_query($this->db->getDb(), $query);
+        if (mysqli_num_rows($result) > 0) {
+            $json['check'] = true;
+        } else $json['check'] = false;
+        mysqli_close($this->db->getDb());
+        return $json;
+    }
+    public function changepass($username, $password)
+    {
+        if ($this->checkPasswordFormat($password)) {
+            $query = "UPDATE " . $this->db_table . " SET `pass`='$password' WHERE `Useracc` = '$username'";
+            $update = mysqli_query($this->db->getDb(), $query);
+            if ($update  == true) {
+                $json['success'] = true;
+                $json['message'] = "update successful";
+            } else {
+                $json['success'] = false;
+                $json['message'] = "update error";
+            }
+        } else {
+            $json['success'] = false;
+            $json['message'] = "Mật khẩu phải có ít nhất 8 ký tự\nMật khẩu phải chứa ít nhất một chữ cái viết hoa\n Mật khẩu phải chứa ít nhất một chữ cái viết thường\n Mật khẩu phải chứa ít nhất một số\n Mật khẩu có thể chứa các ký tự đặc biệt như !@#$%^&*";
+        }
+        mysqli_close($this->db->getDb());
+        return $json;
+    }
 }

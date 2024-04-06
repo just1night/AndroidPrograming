@@ -5,9 +5,9 @@ require_once 'user.php';
 
 $email = "tranquanghuycva@gmail.com";
 
-// if (isset($_POST['email'])) {
-//     $email = $_POST['email'];
-// }
+if (isset($_POST['email'])) {
+    $email = $_POST['email'];
+}
 $userObject = new User();
 
 $response = array();

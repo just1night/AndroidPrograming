@@ -1,8 +1,7 @@
 <?php
 include_once 'config.php';
-// require_once 'user.php';
-// require_once 'novel.php';
-// require_once 'message.php';
+require_once 'user.php';
+
 
 // $novel = new Novel();
 // $novel->__construct();
@@ -32,33 +31,7 @@ include_once 'config.php';
 // echo $response;
 
 
-// $idacc = "";
 
-// $idnovel = "";
-
-// $content = "";
-
-
-// if (isset($_POST['idacc'])) {
-
-//     $idacc = $_POST['idacc'];
-// }
-
-// if (isset($_POST['idnovel'])) {
-
-//     $idnovel = $_POST['idnovel'];
-// }
-
-// if (isset($_POST['content'])) {
-
-//     $content = $_POST['content'];
-// }
-
-// $comment = new Message();
-// $comment->__construct();
-// $response = array();
-// $response = json_encode($comment->newComment($idnovel, $idacc, $content));
-// echo $response;
 
 require_once 'bookmark.php';
 

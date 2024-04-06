@@ -6,7 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeAct"
     android:id="@+id/homelayout"
-    android:scrollbars="vertical">
+    android:scrollbars="vertical"
+    android:backgroundTint="#EDEEF0">
 
     <LinearLayout
         android:layout_width="match_parent"

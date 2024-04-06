@@ -65,7 +65,15 @@ public class HomeAct extends AppCompatActivity {
         account.setUsername(valueShowname);
         getUser(valueShowname);
 
+        rv = findViewById(R.id.rcv_category);
+        categoryadapter = new CategoryAdapter(this);
 
+        LinearLayoutManager linearlayoutmanager = new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
+        rv.setLayoutManager(linearlayoutmanager);
+
+        lst = new ArrayList<>();
+        Callgettop5();
+        getlistnovel();
 
     }
 
@@ -73,20 +81,6 @@ public class HomeAct extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         lastSeenResponse = new LastSeenResponse();
-        rv = findViewById(R.id.rcv_category);
-        categoryadapter = new CategoryAdapter(this);
-
-        LinearLayoutManager linearlayoutmanager = new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
-        rv.setLayoutManager(linearlayoutmanager);
-
-
-
-        lst = new ArrayList<>();
-        lstnv = new ArrayList<>();
-        getlistnovel();
-        lstnv5 = new ArrayList<>();
-        Callgettop5();
-
         getUser(valueShowname);
     }
 
@@ -134,36 +128,6 @@ public class HomeAct extends AppCompatActivity {
             }
         });
     }
-
-    private void Callgettop5(){
-        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-
-
-        Call<ArrayList<Novel>> call = apiService.Getlist5("");
-        call.enqueue(new Callback<ArrayList<Novel>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Novel>> call, Response<ArrayList<Novel>> response) {
-                if (response.isSuccessful()) {
-                    // Phản hồi từ máy chủ thành công
-                    lstnv5 = response.body();
-                    // Sử dụng dữ liệu ở đây
-                    // Ví dụ: categoryadapter.setData(lstnv);
-                    lst.add(new Category("Truyện đang nổi",lstnv5));
-
-                } else {
-                    // Xử lý khi có phản hồi không thành công
-                    // Ví dụ: Hiển thị thông báo lỗi
-                    Toast.makeText(HomeAct.this, "Không thể nhận dữ liệu từ máy chủ", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Novel>> call, Throwable t) {
-            // Xử lý khi có lỗi kết nối
-                Toast.makeText(HomeAct.this,  t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
     private void getlistnovel(){
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
 
@@ -174,10 +138,12 @@ public class HomeAct extends AppCompatActivity {
             public void onResponse(Call<ArrayList<Novel>> call, Response<ArrayList<Novel>> response) {
                 if (response.isSuccessful()) {
                     // Phản hồi từ máy chủ thành công
+                    lstnv = new ArrayList<>();
+
                     lstnv = response.body();
                     lst.add(new Category("Truyện ",lstnv));
-                    categoryadapter.setData(lst);
-                    rv.setAdapter(categoryadapter);
+
+
                 } else {
                     // Xử lý khi có phản hồi không thành công
                     // Ví dụ: Hiển thị thông báo lỗi
@@ -192,6 +158,39 @@ public class HomeAct extends AppCompatActivity {
             }
         });
     }
+    private void Callgettop5(){
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+
+
+        Call<ArrayList<Novel>> call = apiService.Getlist5("");
+        call.enqueue(new Callback<ArrayList<Novel>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Novel>> call, Response<ArrayList<Novel>> response) {
+                if (response.isSuccessful()) {
+                    lstnv5 = new ArrayList<>();
+                    // Phản hồi từ máy chủ thành công
+                    lstnv5 = response.body();
+
+                    // Sử dụng dữ liệu ở đây
+                    // Ví dụ: categoryadapter.setData(lstnv);
+                    lst.add(new Category("Truyện đang nổi",lstnv5));
+                    categoryadapter.setData(lst);
+                    rv.setAdapter(categoryadapter);
+                } else {
+                    // Xử lý khi có phản hồi không thành công
+                    // Ví dụ: Hiển thị thông báo lỗi
+                    Toast.makeText(HomeAct.this, "Không thể nhận dữ liệu từ máy chủ", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Novel>> call, Throwable t) {
+            // Xử lý khi có lỗi kết nối
+                Toast.makeText(HomeAct.this,  t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void getUser(String username){
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
         Call<Account> call = apiService.Getuser(username);

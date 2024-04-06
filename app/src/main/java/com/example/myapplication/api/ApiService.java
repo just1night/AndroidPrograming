@@ -102,4 +102,18 @@ public interface ApiService {
     Call<ArrayList<Comment>> getListComment(
             @Field("idnovel") int idnovel
     );
+    @FormUrlEncoded
+    @POST("getname.php")
+    Call<AccountExitResponse> IsaccExit(
+            @Field("username") String username);
+
+    @FormUrlEncoded
+    @POST("newpassword.php")
+    Call<ChangePassResponse> changePassmess(
+            @Field("username") String username,
+            @Field("password") String password
+        );
+
+
+
 }
