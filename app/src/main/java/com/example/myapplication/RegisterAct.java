@@ -62,9 +62,7 @@ public class RegisterAct extends AppCompatActivity {
                     if (registerResponse.isSuccess()) {
                         // Đăng nhập thành công, chuyển đến màn hình chính hoặc thực hiện các hành động khác
                         Toast.makeText(RegisterAct.this, registerResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent();
-                        i.setClass(RegisterAct.this,MainActivity.class);
-                        startActivity(i);
+                        finish();
                     } else {
                         // Đăng nhập không thành công, thông báo lỗi
                         Toast.makeText(RegisterAct.this, registerResponse.getMessage(), Toast.LENGTH_SHORT).show();

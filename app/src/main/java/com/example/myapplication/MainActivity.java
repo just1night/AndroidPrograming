@@ -20,7 +20,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    private TextView acc,pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        EditText acc = findViewById(R.id.editTextTextAcc);
-        EditText pass = findViewById(R.id.editTextTextPassword);
+        acc = findViewById(R.id.editTextTextAcc);
+        pass = findViewById(R.id.editTextTextPassword);
 
         Button reg1 = findViewById(R.id.buttonResigter1);
         Button log = findViewById(R.id.buttonLogin1);
@@ -61,6 +61,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        acc.setText("");
+        pass.setText("");
+
     }
 
     private void LoginUser(String username, String password) {
