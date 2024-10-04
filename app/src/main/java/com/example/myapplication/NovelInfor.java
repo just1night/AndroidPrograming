@@ -122,7 +122,6 @@ public class NovelInfor extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rcvChapter.setLayoutManager(linearLayoutManager);
         getListChapter(valueShowidnovel);
-        //chapterAdapter.setChapters(getListChapter(valueShowidnovel));
 
 //        listcomment
 
@@ -132,7 +131,7 @@ public class NovelInfor extends AppCompatActivity {
         getListComment(valueShowidnovel);
     }
     private void getListComment(int idnovel) {
-        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class );
         Call<ArrayList<Comment>> call = apiService.getListComment(idnovel);
         call.enqueue(new Callback<ArrayList<Comment>>() {
             @Override

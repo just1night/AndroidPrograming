@@ -24,6 +24,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
         this.mContext = mContext;
     }
 
+    //gan du lieu
     public void setChapters(ArrayList<Chapter> chapters,IClickchapter iClickchapter) {
         this.iClickchapter = iClickchapter;
         this.chapters = chapters;
@@ -32,6 +33,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
 
     @NonNull
     @Override
+
     public ChapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chapter_list,parent,false);
         return new ChapterViewHolder(view);

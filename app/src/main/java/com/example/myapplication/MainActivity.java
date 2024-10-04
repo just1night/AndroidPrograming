@@ -48,7 +48,10 @@ public class MainActivity extends AppCompatActivity {
         log.setOnClickListener(new View.OnClickListener(){
             @Override
             public  void onClick(View v){
-                LoginUser(acc.getText().toString(),pass.getText().toString());
+                if(
+                        acc.getText().toString().equals("")||pass.getText().toString().equals("")
+                )    Toast.makeText(MainActivity.this, "Có dữ liệu chưa được nhập vào", Toast.LENGTH_SHORT).show();
+                else LoginUser(acc.getText().toString(),pass.getText().toString());
             }
         });
 
@@ -68,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         acc.setText("");
         pass.setText("");
-
     }
 
     private void LoginUser(String username, String password) {
@@ -80,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
 
-                if (response.isSuccessful()) {
+                if (response.isSuccessful()&& response.body() != null) {
                     LoginResponse loginResponse = response.body();
                     if (loginResponse.isSuccess()) {
                         // Đăng nhập thành công, chuyển đến màn hình chính hoặc thực hiện các hành động khác

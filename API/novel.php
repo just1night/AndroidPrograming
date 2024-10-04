@@ -62,4 +62,23 @@ class Novel
         mysqli_close($this->db->getDb());
         return false;
     }
+
+    public function getresearchnovel($string){
+        $query="SELECT * FROM " . $this->db_table . " WHERE name LIKE '%".$string."%'";
+        $result = mysqli_query($this->db->getDb(), $query);
+
+        if (mysqli_num_rows($result) > 0) {
+
+            $data = array();
+
+            while ($row = mysqli_fetch_assoc($result)) {
+                $data[] = $row;
+            }
+            mysqli_close($this->db->getDb());
+
+            return $data;
+        }
+        mysqli_close($this->db->getDb());
+        return false;
+    }
 }

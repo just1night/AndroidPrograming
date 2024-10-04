@@ -5,10 +5,17 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Layout;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +26,7 @@ import com.example.myapplication.category.Category;
 import com.example.myapplication.category.CategoryAdapter;
 import com.example.myapplication.classobject.Account;
 import com.example.myapplication.novel.Novel;
+import com.example.myapplication.novel.ResearchAdapter;
 
 import java.util.ArrayList;
 
@@ -27,10 +35,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeAct extends AppCompatActivity {
-    private RecyclerView rv;
+
+
+
+    private RecyclerView rv,rvresearch;
     private CategoryAdapter categoryadapter;
 
-    private ArrayList<Novel> lstnv5,lstnv;
+
+    private ArrayList<Novel> lstnv5,lstnv,lstresearch;
     private ArrayList<Category> lst;
 
     private TextView useracc;
@@ -40,6 +52,7 @@ public class HomeAct extends AppCompatActivity {
     private  TextView txtchapter,txtnovel;
     private CardView lastseen;
 
+    private TextView inputsearch;
 
     private LastSeenResponse lastSeenResponse;
     private String valueShowname;
@@ -67,6 +80,42 @@ public class HomeAct extends AppCompatActivity {
 
         rv = findViewById(R.id.rcv_category);
         categoryadapter = new CategoryAdapter(this);
+
+        //searchbar
+//        research_dialog = findViewById(R.id.research_dialog);
+        inputsearch = findViewById(R.id.txtsearch);
+        inputsearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(HomeAct.this);
+                dialog.setContentView(R.layout.research_dialog);
+
+                rvresearch = dialog.findViewById(R.id.recyclerView_list);
+
+
+                SearchView find = dialog.findViewById(R.id.txtsearch1);
+                find.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        getresearch(query);
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+
+                        getresearch(newText);
+                        return true;
+                    }
+                });
+
+
+
+
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
 
         LinearLayoutManager linearlayoutmanager = new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
         rv.setLayoutManager(linearlayoutmanager);
@@ -193,7 +242,6 @@ public class HomeAct extends AppCompatActivity {
             }
         });
     }
-
     private void getUser(String username){
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
         Call<Account> call = apiService.Getuser(username);
@@ -221,5 +269,41 @@ public class HomeAct extends AppCompatActivity {
                 Toast.makeText(HomeAct.this,  t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    private void getresearch(String str){
+
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        Call<ArrayList<Novel>> call = apiService.GetlistSearch(str);
+        call.enqueue(new Callback<ArrayList<Novel>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Novel>> call, Response<ArrayList<Novel>> response) {
+                if(response.isSuccessful()){
+                    if(response.body()==null){
+
+                    }else{
+                        ResearchAdapter researchAdapter = new ResearchAdapter(HomeAct.this);
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HomeAct.this, RecyclerView.VERTICAL, false);
+                        rvresearch.setLayoutManager(linearLayoutManager);
+
+                        lstresearch = response.body();
+                        researchAdapter.setData(lstresearch);
+                        rvresearch.setAdapter(researchAdapter);
+                    }
+
+
+
+                }else{
+                    Toast.makeText(HomeAct.this, "Không thể nhận dữ liệu từ máy chủ", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Novel>> call, Throwable t) {
+                Toast.makeText(HomeAct.this,  t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+
     }
 }

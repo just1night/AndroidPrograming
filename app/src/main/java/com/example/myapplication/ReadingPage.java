@@ -56,6 +56,8 @@ public class ReadingPage extends AppCompatActivity {
         }
         TextView txt = findViewById(R.id.tvtitlechapter);
         txt.setText(namechap);
+
+
         rcvReading = findViewById(R.id.rcvreading);
         readingAdapter = new ReadingAdapter(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);

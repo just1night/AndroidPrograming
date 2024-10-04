@@ -33,11 +33,15 @@
             android:textAlignment="center"
             android:textSize="20sp" />
 
-        <androidx.appcompat.widget.SearchView
-            android:layout_width="340dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="35dp"
-            android:layout_marginTop="20dp" />
+        <TextView
+            android:id="@+id/txtsearch"
+            android:layout_width="314dp"
+            android:layout_height="45dp"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginVertical="20dp"
+            android:background="@drawable/radius_card"
+            android:padding="10dp"
+            android:text="Tìm kiếm" />
 
     </LinearLayout>
 

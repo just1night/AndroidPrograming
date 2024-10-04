@@ -31,6 +31,12 @@ public interface ApiService {
             @Field("email") String email
     );
 
+    //timf kiếm truyện
+    @FormUrlEncoded
+    @POST("getresearchnovel.php")
+    Call<ArrayList<Novel>> GetlistSearch(
+            @Field("name") String name
+    );
     //lấy top 5 truyên đầu tiên
     @FormUrlEncoded
     @POST("gettopnovel.php")

@@ -35,8 +35,9 @@ public class RegisterAct extends AppCompatActivity {
         regis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(pass.getText().toString().equals(repass.getText().toString())){
+                if(acc.getText().toString().trim().equals("")||pass.getText().toString().trim().equals("")||repass.getText().toString().trim().equals("")||email.getText().toString().trim().equals(""))
+                    Toast.makeText(RegisterAct.this, "Dữ liệu nhập vào bị thiếu", Toast.LENGTH_SHORT).show();
+                else if(pass.getText().toString().trim().equals(repass.getText().toString().trim())){
                     RegisterUser(acc.getText().toString(),pass.getText().toString(),email.getText().toString());
                 }else{
                     Toast.makeText(RegisterAct.this, "hãy kiểm tra lại mật khẩu", Toast.LENGTH_SHORT).show();
